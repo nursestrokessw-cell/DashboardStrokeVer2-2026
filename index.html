@@ -173,6 +173,18 @@
   .chart-card.wide{grid-column:1/-1;}
   .chart-card.wide canvas{max-height:320px;}
   .chart-card.grouped-chart canvas{max-height:520px;}
+  :is(#chartGrid,#patientChartGrid,#sftChartGrid,#hhcChartGrid){grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;}
+  :is(#chartGrid,#patientChartGrid,#sftChartGrid,#hhcChartGrid) .chart-card{padding:14px 15px 12px;border-radius:17px;}
+  :is(#chartGrid,#patientChartGrid,#sftChartGrid,#hhcChartGrid) .chart-card-head{margin-bottom:8px;padding-bottom:8px;}
+  :is(#chartGrid,#patientChartGrid,#sftChartGrid,#hhcChartGrid) .chart-card h3{font-size:12.5px;line-height:1.4;}
+  :is(#chartGrid,#patientChartGrid,#sftChartGrid,#hhcChartGrid) .chart-card .hint{font-size:9.5px;}
+  :is(#chartGrid,#patientChartGrid,#sftChartGrid,#hhcChartGrid) .chart-card canvas{max-height:205px;}
+  :is(#chartGrid,#patientChartGrid,#sftChartGrid,#hhcChartGrid) .chart-card.wide{grid-column:span 2;}
+  :is(#chartGrid,#patientChartGrid,#sftChartGrid,#hhcChartGrid) .chart-card.wide canvas{max-height:235px;}
+  #chartGrid .chart-card.wide{grid-column:auto;}
+  #chartGrid .chart-card.wide canvas{max-height:220px;}
+  #hhcChartGrid .chart-card.grouped-chart{grid-column:span 2;}
+  #hhcChartGrid .chart-card.grouped-chart canvas{max-height:420px;}
   .section-title{margin:22px 0 10px;color:var(--text-secondary);font-size:14px;font-weight:700;}
 
   .toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px;padding:16px;background:var(--card);
@@ -244,6 +256,7 @@
 
   @media (max-width:1180px){
     .kpi-row{grid-template-columns:repeat(3,minmax(180px,1fr));}
+    :is(#chartGrid,#patientChartGrid,#sftChartGrid,#hhcChartGrid){grid-template-columns:repeat(2,minmax(0,1fr));}
   }
   @media (max-width:820px){
     .app-header{position:relative;padding:12px 16px;gap:12px;flex-wrap:wrap;}
@@ -254,6 +267,9 @@
     main{padding-top:20px;}
     .page-heading{align-items:flex-start;flex-direction:column;gap:8px;}
     .chart-grid{grid-template-columns:1fr;}
+    :is(#chartGrid,#patientChartGrid,#sftChartGrid,#hhcChartGrid){grid-template-columns:1fr;}
+    :is(#chartGrid,#patientChartGrid,#sftChartGrid,#hhcChartGrid) .chart-card.wide{grid-column:auto;}
+    #hhcChartGrid .chart-card.grouped-chart{grid-column:auto;}
     .chart-card.wide{grid-column:auto;}
     .toolbar select{max-width:none;flex:1 1 180px;}
     .table-wrap{max-height:none;}
@@ -1319,7 +1335,7 @@ function renderDashboard(){
     <div class="chart-card"><div class="chart-card-head"><div><h3>ผลการเยี่ยมบ้าน (HHC)</h3><div class="hint">HHC2026 · c27</div></div></div><canvas id="chHhc"></canvas></div>
   `;
 
-  chartCategorical('chDx', P, 'c13', ['Ischemic','Hemorrhage','TIA','Non Stroke','Bell Palsy','Delirium','Dizzeness'], 'doughnut');
+  chartCategorical('chDx', P, 'c13', ['Ischemic','Hemorrhage','TIA','Non Stroke','Bell Palsy','Delirium','Dizzeness'], 'bar', CHART_INSTANCES, 8, false, true);
   chartCategorical('chDc', P, 'c19', ['กลับบ้าน','Refer for MT','Refer รพช','Refer สุโขทัย','referสุโขทัย','ตาย','ย้ายออก','ไม่สมัครอยู่'], 'bar');
   chartTrend('chTrend', P, 'c2');
   chartCategorical('chDistrict', P, 'c5', ['สวรรคโลก','ศรีสำโรง','ศรีสัชนาลัย','ศรีนคร','ทุ่งเสลี่ยม','นอกเขตในจังหวัด','นอกดขตต่างจังหวัด'], 'bar');
@@ -1361,7 +1377,7 @@ function renderSftDashboard(){
   chartCategorical('sftChMode', rows, 'c5', fieldByKey('SFT2026','c5').o, 'bar', SFT_CHART_INSTANCES);
   chartCategorical('sftChDistrict', rows, 'c6', fieldByKey('SFT2026','c6').o, 'bar', SFT_CHART_INSTANCES);
   chartCategorical('sftChSubdistrict', rows, 'c7', fieldByKey('SFT2026','c7').o, 'bar', SFT_CHART_INSTANCES, 100);
-  chartCategorical('sftChDx', rows, 'c8', fieldByKey('SFT2026','c8').o, 'doughnut', SFT_CHART_INSTANCES);
+  chartCategorical('sftChDx', rows, 'c8', fieldByKey('SFT2026','c8').o, 'bar', SFT_CHART_INSTANCES, 8, false, true);
   chartCategorical('sftChMed', rows, 'c9', fieldByKey('SFT2026','c9').o, 'bar', SFT_CHART_INSTANCES);
   chartCategorical('sftChReason', rows, 'c10', fieldByKey('SFT2026','c10').o, 'bar', SFT_CHART_INSTANCES, 100);
   chartCategorical('sftChStatus', rows, 'c11', fieldByKey('SFT2026','c11').o, 'doughnut', SFT_CHART_INSTANCES);
@@ -1407,7 +1423,7 @@ function renderPatientDashboard(){
   chartCategorical('patChMode', rows, 'c4', fieldByKey('Patient2026','c4').o, 'bar', PATIENT_CHART_INSTANCES);
   chartCategorical('patChDistrict', rows, 'c5', fieldByKey('Patient2026','c5').o, 'bar', PATIENT_CHART_INSTANCES);
   chartCategorical('patChSubdistrict', rows, 'c6', fieldByKey('Patient2026','c6').o, 'bar', PATIENT_CHART_INSTANCES, 100);
-  chartCategorical('patChDx', rows, 'c13', fieldByKey('Patient2026','c13').o, 'doughnut', PATIENT_CHART_INSTANCES);
+  chartCategorical('patChDx', rows, 'c13', fieldByKey('Patient2026','c13').o, 'bar', PATIENT_CHART_INSTANCES, 8, false, true);
   chartCategorical('patChLate4h', rows, 'c16', fieldByKey('Patient2026','c16').o, 'bar', PATIENT_CHART_INSTANCES, 100);
   chartCategorical('patChDischarge', rows, 'c19', fieldByKey('Patient2026','c19').o, 'bar', PATIENT_CHART_INSTANCES);
 }
@@ -1428,19 +1444,15 @@ function renderHhcDashboard(){
   grid.innerHTML = `
     <div class="chart-card"><div class="chart-card-head"><div><h3>Diagnosis</h3><div class="hint">HHC2026 · c4</div></div></div><canvas id="hhcChDx"></canvas></div>
     <div class="chart-card"><div class="chart-card-head"><div><h3>อำเภอ</h3><div class="hint">HHC2026 · c5</div></div></div><canvas id="hhcChDistrict"></canvas></div>
-    <div class="chart-card wide grouped-chart"><div class="chart-card-head"><div><h3>BI จำหน่าย / 3 เดือน / 6 เดือน</h3><div class="hint">HHC2026 · c11 / c13 / c15</div></div></div><canvas id="hhcChBiCombined"></canvas></div>
-    <div class="chart-card wide grouped-chart"><div class="chart-card-head"><div><h3>MRS จำหน่าย / 3 เดือน / 6 เดือน</h3><div class="hint">HHC2026 · c22 / c24 / c26</div></div></div><canvas id="hhcChMrsCombined"></canvas></div>
+    <div class="chart-card wide outcome-chart"><div class="chart-card-head"><div><h3>BI จำหน่าย (แนวโน้ม)</h3><div class="hint">HHC2026 · c11 / เสียชีวิตจาก c27</div></div></div><canvas id="hhcChBiCombined"></canvas></div>
+    <div class="chart-card wide outcome-chart"><div class="chart-card-head"><div><h3>MRS จำหน่าย (แนวโน้ม)</h3><div class="hint">HHC2026 · c22 / เสียชีวิตจาก c27</div></div></div><canvas id="hhcChMrsCombined"></canvas></div>
     <div class="chart-card"><div class="chart-card-head"><div><h3>NIHSS จำหน่าย (แนวโน้ม)</h3><div class="hint">HHC2026 · c19</div></div></div><canvas id="hhcChNihss"></canvas></div>
   `;
 
-  chartCategorical('hhcChDx', rows, 'c4', fieldByKey('HHC2026','c4').o, 'doughnut', HHC_CHART_INSTANCES, 8, true);
+  chartCategorical('hhcChDx', rows, 'c4', fieldByKey('HHC2026','c4').o, 'bar', HHC_CHART_INSTANCES, 8, true, true);
   chartCategorical('hhcChDistrict', rows, 'c5', fieldByKey('HHC2026','c5').o, 'bar', HHC_CHART_INSTANCES, 8, true);
-  chartGroupedCategorical('hhcChBiCombined', rows, [
-    {key:'c11', label:'BI จำหน่าย'}, {key:'c13', label:'BI 3 เดือน'}, {key:'c15', label:'BI 6 เดือน'}
-  ], HHC_CHART_INSTANCES, true);
-  chartGroupedCategorical('hhcChMrsCombined', rows, [
-    {key:'c22', label:'MRS จำหน่าย'}, {key:'c24', label:'MRS 3 เดือน'}, {key:'c26', label:'MRS 6 เดือน'}
-  ], HHC_CHART_INSTANCES, true);
+  chartHhcOutcomes('hhcChBiCombined', rows, 'c11', 'BI', HHC_CHART_INSTANCES);
+  chartHhcOutcomes('hhcChMrsCombined', rows, 'c22', 'MRS', HHC_CHART_INSTANCES);
   chartCategorical('hhcChNihss', rows, 'c19', fieldByKey('HHC2026','c19').o, 'bar', HHC_CHART_INSTANCES, 8, true);
 }
 
@@ -1464,7 +1476,7 @@ function countBy(rows,key){
   return m;
 }
 
-function chartCategorical(canvasId, rows, key, order, kind, store, limit, showPercent){
+function chartCategorical(canvasId, rows, key, order, kind, store, limit, showPercent, forceVertical){
   store = store || CHART_INSTANCES;
   const counts = countBy(rows,key);
   let labels = order ? order.filter(l=>counts[l]) : Object.keys(counts).sort((a,b)=>counts[b]-counts[a]);
@@ -1490,7 +1502,7 @@ function chartCategorical(canvasId, rows, key, order, kind, store, limit, showPe
             if(showPercent && total>0) t += ` (${(Number(c.raw)/total*100).toFixed(1)}%)`;
             return t;
           } } } },
-      indexAxis: (kind==='bar' && labels.length>5) ? 'y' : 'x',
+      indexAxis: (kind==='bar' && labels.length>5 && !forceVertical) ? 'y' : 'x',
       scales: kind==='bar' ? {
         x:{ grid:{color:gridColor}, ticks:{color:textColor,font:{size:10}} },
         y:{ grid:{color:gridColor}, ticks:{color:textColor,font:{size:10}} }
@@ -1556,6 +1568,93 @@ function chartGroupedCategorical(canvasId, rows, series, store, showPercent){
       } : {
         x:{grid:{display:false},ticks:{color:textColor,font:{size:10}}},
         y:{beginAtZero:true,grid:{color:gridColor},ticks:{color:textColor,font:{size:10}}}
+      }
+    }
+  }));
+}
+
+function chartPeriodAverages(canvasId, rows, periods, datasetLabel, store, suggestedMax){
+  store = store || CHART_INSTANCES;
+  const labels = periods.map(p=>p.label);
+  const values = periods.map(p=>Number(avg(rows.map(r=>r[p.key])).toFixed(1)));
+  const textColor = cssVar('--text-secondary');
+  const gridColor = cssVar('--grid');
+  const ctx = document.getElementById(canvasId);
+  store.push(new Chart(ctx, {
+    type:'bar',
+    data:{
+      labels,
+      datasets:[{
+        label:datasetLabel,
+        data:values,
+        backgroundColor:[slotColor(0),slotColor(1),slotColor(3)],
+        borderRadius:10,
+        maxBarThickness:64
+      }]
+    },
+    options:{
+      responsive:true,
+      maintainAspectRatio:true,
+      layout:{padding:{top:20,right:10}},
+      plugins:{
+        valueLabels:{color:textColor,fontSize:10},
+        legend:{display:false},
+        tooltip:{backgroundColor:'#17352a',titleFont:{family:'Prompt',size:11},bodyFont:{family:'Prompt',size:11},padding:10,cornerRadius:10,
+          callbacks:{label:c=>` ${datasetLabel}: ${c.formattedValue}`}}
+      },
+      scales:{
+        x:{grid:{display:false},title:{display:true,text:'ช่วงติดตาม',color:textColor,font:{size:10,weight:'600'}},ticks:{color:textColor,font:{size:10}}},
+        y:{beginAtZero:true,suggestedMax,grid:{color:gridColor},title:{display:true,text:datasetLabel,color:textColor,font:{size:10,weight:'600'}},ticks:{color:textColor,font:{size:10}}}
+      }
+    }
+  }));
+}
+
+function chartHhcOutcomes(canvasId, rows, key, metricLabel, store){
+  store = store || HHC_CHART_INSTANCES;
+  const labels = ['ดีขึ้น','เท่าเดิม','แย่ลง','เสียชีวิต'];
+  const counts = Object.fromEntries(labels.map(label=>[label,0]));
+  const deathValues = new Set(['เสียชีวิต','ตาย','dead','death']);
+  rows.forEach(row=>{
+    const raw = String(row[key] ?? '').trim();
+    const visitResult = String(row.c27 ?? '').trim();
+    const isDead = deathValues.has(raw.toLowerCase()) || deathValues.has(visitResult.toLowerCase());
+    if(isDead) counts['เสียชีวิต']++;
+    else if(Object.prototype.hasOwnProperty.call(counts,raw)) counts[raw]++;
+  });
+  const values = labels.map(label=>counts[label]);
+  const total = values.reduce((a,b)=>a+b,0);
+  const textColor = cssVar('--text-secondary');
+  const gridColor = cssVar('--grid');
+  const ctx = document.getElementById(canvasId);
+  store.push(new Chart(ctx, {
+    type:'bar',
+    data:{
+      labels,
+      datasets:[{
+        data:values,
+        backgroundColor:[slotColor(0),slotColor(3),slotColor(2),slotColor(5)],
+        borderRadius:9,
+        maxBarThickness:58
+      }]
+    },
+    options:{
+      responsive:true,
+      maintainAspectRatio:true,
+      layout:{padding:{top:20,right:10}},
+      plugins:{
+        valueLabels:{color:textColor,fontSize:10,showPercent:true,skipZero:true},
+        legend:{display:false},
+        tooltip:{backgroundColor:'#17352a',titleFont:{family:'Prompt',size:11},bodyFont:{family:'Prompt',size:11},padding:10,cornerRadius:10,
+          callbacks:{label:c=>{
+            let text = ` ${c.formattedValue} ราย`;
+            if(total>0) text += ` (${(Number(c.raw)/total*100).toFixed(1)}%)`;
+            return text;
+          }}}
+      },
+      scales:{
+        x:{grid:{display:false},title:{display:true,text:`ผลลัพธ์ ${metricLabel}`,color:textColor,font:{size:10,weight:'600'}},ticks:{color:textColor,font:{size:10}}},
+        y:{beginAtZero:true,grid:{color:gridColor},title:{display:true,text:'จำนวนผู้ป่วย (ราย)',color:textColor,font:{size:10,weight:'600'}},ticks:{precision:0,color:textColor,font:{size:10}}}
       }
     }
   }));
