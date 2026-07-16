@@ -1,0 +1,1679 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Stroke Unit 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<style>
+  :root{
+    color-scheme:light;
+    --surface-1:#ffffff;--surface-2:#f6faf8;--surface-3:#f0f7f3;--card:#ffffff;
+    --text-primary:#17352a;--text-secondary:#5d7269;--text-muted:#91a49b;
+    --grid:#e9f0ec;--axis:#cfded6;--border:#e1ebe5;
+    --primary:#0fa958;--primary-strong:#0b8e4a;--primary-soft:#ddf7ea;
+    --mint:#ddf7ea;--purple:#8b5cf6;--cyan:#06b6d4;--orange:#f59e0b;--red:#f43f5e;
+    --s1:#0fa958;--s2:#8b5cf6;--s3:#f59e0b;--s4:#06b6d4;
+    --s5:#6d70e8;--s6:#f43f5e;--s7:#ec70a5;--s8:#f08355;
+    --good:#0fa958;--warning:#f59e0b;--serious:#f08355;--critical:#f43f5e;
+    --shadow-sm:0 4px 14px rgba(39,89,66,.045),0 1px 3px rgba(39,89,66,.03);
+    --shadow-md:0 16px 42px rgba(39,89,66,.09);
+    --focus:0 0 0 4px rgba(15,169,88,.13);
+  }
+  @media (prefers-color-scheme:dark){
+    :root:where(:not([data-theme="light"])){
+      color-scheme:light;
+      --surface-1:#fafffc;--surface-2:#edf8f2;--surface-3:#e7f4ec;--card:#fbfffd;
+      --text-primary:#153a29;--text-secondary:#537264;--text-muted:#839e90;
+      --grid:#deebe3;--axis:#c4d9cd;--border:#d6e7dd;
+      --primary:#0b984f;--primary-strong:#087f43;--primary-soft:#d4f2e2;
+      --shadow-sm:0 4px 14px rgba(29,87,58,.055),0 1px 3px rgba(29,87,58,.035);
+      --shadow-md:0 16px 42px rgba(29,87,58,.10);
+      --focus:0 0 0 4px rgba(11,152,79,.14);
+    }
+  }
+  :root[data-theme="dark"]{
+    color-scheme:light;
+    --surface-1:#fafffc;--surface-2:#edf8f2;--surface-3:#e7f4ec;--card:#fbfffd;
+    --text-primary:#153a29;--text-secondary:#537264;--text-muted:#839e90;
+    --grid:#deebe3;--axis:#c4d9cd;--border:#d6e7dd;
+    --primary:#0b984f;--primary-strong:#087f43;--primary-soft:#d4f2e2;
+    --shadow-sm:0 4px 14px rgba(29,87,58,.055),0 1px 3px rgba(29,87,58,.035);
+    --shadow-md:0 16px 42px rgba(29,87,58,.10);
+    --focus:0 0 0 4px rgba(11,152,79,.14);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;min-height:100vh;background:
+    radial-gradient(circle at 6% 2%,rgba(15,169,88,.075),transparent 30rem),
+    radial-gradient(circle at 96% 4%,rgba(6,182,212,.045),transparent 25rem),
+    var(--surface-2);color:var(--text-primary);
+    font-family:"Prompt","Noto Sans Thai","Leelawadee UI",Tahoma,system-ui,-apple-system,"Segoe UI",sans-serif;
+    font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;}
+  button,input,select,textarea{font:inherit;}
+  button{cursor:pointer;}
+  button:disabled{cursor:not-allowed;opacity:.48;}
+  button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:none;box-shadow:var(--focus);}
+  ::selection{background:rgba(15,169,88,.2);}
+  ::placeholder{color:var(--text-muted);opacity:.9;}
+
+  .app-header{position:sticky;top:0;z-index:30;min-height:82px;padding:15px clamp(18px,3vw,38px);
+    display:flex;align-items:center;justify-content:space-between;gap:24px;
+    color:var(--text-primary);background:rgba(255,255,255,.88);backdrop-filter:blur(18px);
+    border-bottom:1px solid rgba(225,235,229,.9);box-shadow:0 4px 22px rgba(39,89,66,.045);}
+  .brand{display:flex;align-items:center;gap:13px;min-width:0;}
+  .brand-mark{width:46px;height:46px;display:grid;place-items:center;flex:0 0 auto;border-radius:14px;
+    color:var(--primary);background:linear-gradient(145deg,#d8f8e7,#effcf5);
+    border:1px solid #cbeedc;box-shadow:0 8px 18px rgba(15,169,88,.10),inset 0 1px 0 #fff;}
+  .brand-mark svg{width:27px;height:27px;}
+  .brand-copy{min-width:0;}
+  .brand-kicker{display:block;margin-bottom:1px;color:var(--primary);font-size:10px;font-weight:700;
+    letter-spacing:.13em;text-transform:uppercase;}
+  .app-header h1{display:flex;align-items:center;gap:9px;margin:0;color:var(--text-primary);font-size:20px;font-weight:700;
+    line-height:1.25;letter-spacing:-.015em;white-space:nowrap;}
+  .year-tag{display:inline-flex;align-items:center;padding:4px 9px;border-radius:999px;color:var(--primary);
+    background:var(--primary-soft);border:1px solid rgba(15,169,88,.10);font-size:10px;font-weight:700;letter-spacing:.04em;}
+  .header-actions{display:flex;align-items:center;justify-content:flex-end;gap:9px;flex-wrap:wrap;}
+  .status-pill{min-height:36px;padding:7px 12px;display:flex;align-items:center;gap:8px;border-radius:999px;
+    color:var(--text-secondary);background:var(--surface-3);border:1px solid var(--border);font-size:11.5px;white-space:nowrap;}
+  .status-dot{width:8px;height:8px;flex:0 0 auto;border-radius:50%;background:#9aada4;box-shadow:0 0 0 4px rgba(145,164,155,.12);}
+  .status-dot.ok{background:var(--good);box-shadow:0 0 0 4px rgba(15,169,88,.12);}
+  .status-dot.err{background:var(--critical);box-shadow:0 0 0 4px rgba(244,63,94,.11);}
+  .status-dot.busy{background:var(--warning);box-shadow:0 0 0 4px rgba(245,158,11,.12);animation:pulse 1.6s infinite;}
+  @keyframes pulse{50%{box-shadow:0 0 0 7px rgba(245,158,11,0);}}
+
+  .btn,.icon-btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:38px;border-radius:12px;
+    transition:transform .16s ease,background-color .16s ease,border-color .16s ease,box-shadow .16s ease;}
+  .btn{padding:8px 15px;border:1px solid transparent;color:#fff;background:var(--primary);font-size:12.5px;font-weight:600;box-shadow:0 7px 16px rgba(15,169,88,.14);}
+  .btn svg,.icon-btn svg{width:16px;height:16px;flex:0 0 auto;}
+  .btn:hover:not(:disabled),.icon-btn:hover:not(:disabled){transform:translateY(-1px);}
+  .btn:hover:not(:disabled){background:var(--primary-strong);box-shadow:0 10px 22px rgba(15,169,88,.20);}
+  .btn.secondary{color:var(--text-primary);background:var(--card);border-color:var(--border);box-shadow:none;}
+  .btn.secondary:hover:not(:disabled){background:var(--surface-3);border-color:var(--axis);}
+  .app-header .btn.secondary{color:var(--primary);background:var(--primary-soft);border-color:rgba(15,169,88,.09);}
+  .app-header .btn.secondary:hover:not(:disabled){color:#fff;background:var(--primary);border-color:var(--primary);}
+  .btn.danger{color:#fff;background:var(--critical);}
+  .btn.ghost{min-height:34px;padding:6px 11px;color:var(--text-secondary);background:var(--card);border-color:var(--border);box-shadow:none;}
+  .btn.ghost:hover:not(:disabled){color:var(--primary);background:var(--primary-soft);border-color:rgba(8,127,121,.2);}
+  .icon-btn{min-width:38px;padding:6px 10px;color:var(--text-secondary);background:var(--card);border:1px solid var(--border);font-size:12px;font-weight:600;box-shadow:none;}
+  .icon-btn:hover:not(:disabled){color:var(--primary);background:var(--primary-soft);border-color:rgba(15,169,88,.24);}
+  .app-header .icon-btn{color:var(--primary);background:var(--surface-3);border-color:var(--border);}
+  .app-header .icon-btn:hover{color:#fff;background:var(--primary);border-color:var(--primary);}
+
+  nav.tabs{position:sticky;top:96px;z-index:20;display:flex;gap:6px;width:calc(100% - clamp(24px,5vw,72px));max-width:1428px;
+    margin:14px auto 0;padding:7px;overflow-x:auto;background:rgba(255,255,255,.91);border:1px solid rgba(225,235,229,.95);
+    border-radius:18px;scrollbar-width:none;box-shadow:0 10px 30px rgba(39,89,66,.07);backdrop-filter:blur(16px);}
+  nav.tabs::-webkit-scrollbar{display:none;}
+  nav.tabs button{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 16px;
+    color:var(--text-secondary);background:transparent;border:0;border-radius:12px;white-space:nowrap;font-size:12.5px;font-weight:600;
+    transition:color .16s ease,background .16s ease,box-shadow .16s ease,transform .16s ease;}
+  nav.tabs button:hover{color:var(--primary);background:var(--primary-soft);}
+  nav.tabs button.active{color:#fff;background:linear-gradient(135deg,#18b866,var(--primary));box-shadow:0 8px 18px rgba(15,169,88,.20);}
+  .tab-icon{width:26px;height:26px;display:grid;place-items:center;border-radius:9px;color:var(--text-muted);background:var(--surface-2);transition:.18s ease;}
+  .tab-icon svg{width:15px;height:15px;}
+  nav.tabs button.active .tab-icon{color:#fff;background:rgba(255,255,255,.16);}
+
+  main{width:100%;max-width:1500px;margin:0 auto;padding:30px clamp(18px,3vw,38px) 60px;}
+  .view{display:none;animation:viewIn .25s ease both;}
+  .view.active{display:block;}
+  @keyframes viewIn{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
+  .page-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin:0 0 24px;}
+  .page-kicker{display:inline-flex;align-items:center;margin-bottom:8px;padding:5px 10px;color:var(--primary);background:var(--primary-soft);
+    border:1px solid rgba(15,169,88,.08);border-radius:999px;font-size:9.5px;font-weight:700;letter-spacing:.10em;text-transform:uppercase;}
+  .page-heading h2{margin:0 0 5px;color:var(--text-primary);font-size:25px;font-weight:700;line-height:1.35;letter-spacing:-.018em;}
+  .page-heading p{max-width:760px;margin:0;color:var(--text-muted);font-size:12.5px;}
+
+  .kpi-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-bottom:22px;}
+  .kpi{--kpi-color:var(--primary);--kpi-pastel:#edfbf4;position:relative;min-height:172px;padding:21px 22px 19px;overflow:hidden;
+    background:linear-gradient(135deg,#fff 12%,var(--kpi-pastel) 125%);border:1px solid color-mix(in srgb,var(--kpi-color) 10%,var(--border));
+    border-radius:22px;box-shadow:var(--shadow-sm);transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease;}
+  .kpi::after{content:"";position:absolute;right:-28px;bottom:-40px;width:130px;height:130px;border-radius:50%;
+    background:color-mix(in srgb,var(--kpi-color) 7%,transparent);}
+  .kpi:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--kpi-color) 22%,var(--border));box-shadow:var(--shadow-md);}
+  .kpi-green{--kpi-color:#0fa958;--kpi-pastel:#e1f9ec}.kpi-purple{--kpi-color:#8b5cf6;--kpi-pastel:#f0eafe}
+  .kpi-cyan{--kpi-color:#06b6d4;--kpi-pastel:#e1f7fb}.kpi-orange{--kpi-color:#f59e0b;--kpi-pastel:#fff4df}
+  .kpi-red{--kpi-color:#f43f5e;--kpi-pastel:#ffe8ed}.kpi-indigo{--kpi-color:#6d70e8;--kpi-pastel:#ebecff}
+  .kpi-top{position:relative;z-index:1;display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:16px;}
+  .kpi-icon{width:48px;height:48px;display:grid;place-items:center;flex:0 0 auto;border-radius:15px;color:var(--kpi-color);
+    background:color-mix(in srgb,var(--kpi-color) 12%,#fff);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--kpi-color) 9%,transparent);}
+  .kpi-icon svg{width:24px;height:24px;}
+  .kpi .label{flex:1;margin:3px 0 0;color:var(--text-secondary);font-size:12px;font-weight:500;line-height:1.45;text-align:right;}
+  .kpi .value{position:relative;z-index:1;color:var(--kpi-color);font-size:34px;font-weight:700;line-height:1.12;letter-spacing:-.035em;}
+  .kpi .sub{position:relative;z-index:1;margin-top:8px;color:var(--text-muted);font-size:10.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+
+  .dashboard-layout{display:grid;grid-template-columns:252px minmax(0,1fr);gap:18px;align-items:start;}
+  .dashboard-main{min-width:0;}
+  .filter-panel{position:sticky;top:150px;display:flex;flex-direction:column;gap:13px;padding:18px;background:var(--card);
+    border:1px solid var(--border);border-radius:20px;box-shadow:var(--shadow-sm);}
+  .filter-panel h3{margin:0;color:var(--text-primary);font-size:13px;font-weight:700;}
+  .filter-panel .field{display:flex;flex-direction:column;gap:5px;}
+  .filter-panel .field label{color:var(--text-secondary);font-size:10.5px;font-weight:620;}
+  .filter-panel select{width:100%;min-height:39px;padding:8px 10px;color:var(--text-primary);background:var(--surface-1);
+    border:1px solid var(--border);border-radius:11px;font-size:12px;transition:border-color .16s ease,box-shadow .16s ease;}
+  .filter-panel select:hover{border-color:var(--axis);}
+  .filter-panel select:focus{border-color:var(--primary);}
+  .filter-panel .btn.ghost{width:100%;justify-content:center;}
+  @media (max-width:940px){
+    .dashboard-layout{grid-template-columns:1fr;}
+    .filter-panel{position:static;}
+  }
+
+  .chart-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;}
+  .chart-card{min-width:0;padding:21px 22px 18px;background:linear-gradient(145deg,#fff 0%,color-mix(in srgb,var(--primary-soft) 17%,#fff) 100%);
+    border:1px solid var(--border);border-radius:22px;
+    box-shadow:var(--shadow-sm);transition:border-color .18s ease,box-shadow .18s ease;}
+  .chart-card:hover{border-color:var(--axis);box-shadow:0 16px 38px rgba(39,89,66,.075);}
+  .chart-card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--grid);}
+  .chart-card h3{margin:0 0 3px;color:var(--text-primary);font-size:13.5px;font-weight:600;}
+  .chart-card .hint{color:var(--text-muted);font-size:10.5px;}
+  .chart-card canvas{max-height:290px;}
+  .chart-card.wide{grid-column:1/-1;}
+  .chart-card.wide canvas{max-height:320px;}
+  .chart-card.grouped-chart canvas{max-height:520px;}
+  .section-title{margin:22px 0 10px;color:var(--text-secondary);font-size:14px;font-weight:700;}
+
+  .toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px;padding:16px;background:var(--card);
+    border:1px solid var(--border);border-radius:20px;box-shadow:var(--shadow-sm);}
+  .search-box{position:relative;display:flex;align-items:center;min-width:250px;flex:1 1 310px;}
+  .search-box svg{position:absolute;left:12px;width:16px;height:16px;color:var(--text-muted);pointer-events:none;}
+  .toolbar input[type=text],.toolbar select,.toolbar input[type=date]{min-height:39px;color:var(--text-primary);background:var(--surface-1);
+    border:1px solid var(--border);border-radius:12px;padding:8px 12px;font-size:12px;transition:border-color .16s ease,box-shadow .16s ease,background .16s ease;}
+  .toolbar input[type=text]:hover,.toolbar select:hover,.toolbar input[type=date]:hover{border-color:var(--axis);}
+  .toolbar input[type=text]:focus,.toolbar select:focus,.toolbar input[type=date]:focus{border-color:var(--primary);}
+  .search-box input[type=text]{width:100%;padding-left:36px;}
+  .toolbar select{max-width:210px;}
+  .spacer{flex:1 1 10px;}
+  .count-badge{display:inline-flex;align-items:center;min-height:32px;padding:5px 11px;border-radius:999px;color:var(--primary);
+    background:var(--primary-soft);border:1px solid color-mix(in srgb,var(--primary) 15%,transparent);font-size:10.5px;font-weight:700;white-space:nowrap;}
+
+  .table-wrap{max-height:calc(100vh - 315px);overflow:auto;background:var(--card);border:1px solid var(--border);border-radius:22px;
+    box-shadow:var(--shadow-sm);scrollbar-color:var(--axis) transparent;}
+  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);font-size:12px;}
+  thead th{position:sticky;top:0;z-index:2;padding:13px 13px;color:var(--text-secondary);background:#f0f8f4;
+    border-bottom:1px solid var(--border);text-align:left;font-size:10.5px;font-weight:760;letter-spacing:.015em;white-space:nowrap;}
+  thead th:first-child{padding-left:17px;}
+  tbody td{padding:13px;color:var(--text-primary);background:var(--card);border-bottom:1px solid var(--grid);white-space:nowrap;transition:background .14s ease;}
+  tbody td:first-child{padding-left:17px;font-weight:650;}
+  tbody tr:last-child td{border-bottom:0;}
+  tbody tr:hover td{background:var(--primary-soft);}
+  .row-actions{display:flex;gap:6px;}
+  .row-actions .icon-btn{min-height:30px;min-width:auto;padding:4px 9px;font-size:10.5px;}
+  .row-actions .icon-btn:last-child:hover{color:var(--critical);background:color-mix(in srgb,var(--critical) 9%,var(--card));border-color:color-mix(in srgb,var(--critical) 28%,var(--border));}
+  .pagination{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:15px;font-size:12px;}
+  .pagination .muted{min-width:78px;text-align:center;}
+  .empty{height:180px;padding:40px;text-align:center;color:var(--text-muted)!important;font-size:12px;}
+
+  .modal-overlay{position:fixed;inset:0;z-index:100;display:none;align-items:flex-start;justify-content:center;padding:28px 14px;
+    overflow-y:auto;background:rgba(7,25,31,.64);backdrop-filter:blur(6px);}
+  .modal-overlay.open{display:flex;animation:fadeIn .18s ease both;}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  .modal{width:100%;max-width:880px;overflow:hidden;background:var(--surface-1);border:1px solid rgba(255,255,255,.55);
+    border-radius:24px;box-shadow:0 28px 70px rgba(28,71,51,.20);animation:modalIn .22s ease both;}
+  @keyframes modalIn{from{opacity:0;transform:translateY(9px) scale(.99)}to{opacity:1;transform:none}}
+  .modal-head{display:flex;align-items:center;gap:12px;padding:17px 21px;background:var(--card);border-bottom:1px solid var(--border);}
+  .modal-head::before{content:"";width:4px;height:24px;border-radius:4px;background:linear-gradient(var(--primary),var(--s2));}
+  .modal-head h2{flex:1;margin:0;color:var(--text-primary);font-size:16px;font-weight:740;}
+  .modal-body{max-height:70vh;padding:18px 21px 8px;overflow-y:auto;background:var(--surface-2);}
+  .modal-foot{display:flex;justify-content:flex-end;gap:9px;padding:14px 21px;background:var(--card);border-top:1px solid var(--border);}
+  fieldset{margin:0 0 15px;padding:15px 16px 17px;background:var(--card);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow-sm);}
+  legend{padding:0 7px;color:var(--primary);font-size:11px;font-weight:780;letter-spacing:.015em;}
+  .field-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 13px;}
+  .field{display:flex;flex-direction:column;gap:5px;min-width:0;}
+  .field.wide{grid-column:1/-1;}
+  .field label{color:var(--text-secondary);font-size:10.5px;font-weight:620;}
+  .field input,.field select,.field textarea{width:100%;min-height:39px;padding:8px 10px;color:var(--text-primary);background:var(--surface-1);
+    border:1px solid var(--border);border-radius:11px;font-size:12px;transition:border-color .16s ease,box-shadow .16s ease;}
+  .field input:hover,.field select:hover,.field textarea:hover{border-color:var(--axis);}
+  .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--primary);}
+  .field textarea{min-height:64px;resize:vertical;}
+  .field input[readonly],.field select:disabled{color:var(--text-muted);background:var(--surface-3);opacity:.8;}
+
+  .toast-wrap{position:fixed;right:20px;bottom:20px;z-index:200;display:flex;flex-direction:column;gap:9px;}
+  .toast{min-width:250px;max-width:360px;padding:12px 14px 12px 16px;color:var(--text-primary);background:var(--card);
+    border:1px solid var(--border);border-left:4px solid var(--good);border-radius:10px;font-size:12px;box-shadow:var(--shadow-md);animation:toastIn .22s ease both;}
+  .toast.err{border-left-color:var(--critical);}
+  @keyframes toastIn{from{opacity:0;transform:translateX(12px)}to{opacity:1;transform:none}}
+  .legend-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px;color:var(--text-secondary);font-size:11px;}
+  .legend-row span{display:inline-flex;align-items:center;gap:5px;}
+  .legend-row i{width:9px;height:9px;display:inline-block;border-radius:2px;}
+  .muted{color:var(--text-muted);}
+  .sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important;}
+
+  @media (max-width:1180px){
+    .kpi-row{grid-template-columns:repeat(3,minmax(180px,1fr));}
+  }
+  @media (max-width:820px){
+    .app-header{position:relative;padding:12px 16px;gap:12px;flex-wrap:wrap;}
+    .header-actions{width:100%;justify-content:flex-start;}
+    .status-pill{margin-right:auto;}
+    nav.tabs{padding:0 10px;}
+    nav.tabs button{min-height:50px;padding:0 10px;}
+    main{padding-top:20px;}
+    .page-heading{align-items:flex-start;flex-direction:column;gap:8px;}
+    .chart-grid{grid-template-columns:1fr;}
+    .chart-card.wide{grid-column:auto;}
+    .toolbar select{max-width:none;flex:1 1 180px;}
+    .table-wrap{max-height:none;}
+  }
+  @media (max-width:560px){
+    .brand-mark{width:40px;height:40px;border-radius:12px;}
+    .brand-mark svg{width:23px;height:23px;}
+    .brand-kicker{font-size:9px;}
+    .app-header h1{font-size:17px;}
+    .year-tag{display:none;}
+    .header-actions{gap:7px;}
+    .status-pill{max-width:calc(100% - 96px);overflow:hidden;}
+    #statusText{overflow:hidden;text-overflow:ellipsis;}
+    .btn-label{display:none;}
+    nav.tabs{gap:0;}
+    nav.tabs button{gap:6px;font-size:11.5px;}
+    .tab-icon{width:25px;height:25px;}
+    main{padding:17px 12px 38px;}
+    .page-heading{margin-bottom:15px;}
+    .page-heading h2{font-size:19px;}
+    .page-heading p{font-size:11.5px;}
+    .kpi-row{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;}
+    .kpi{min-height:126px;padding:15px 13px 13px;}
+    .kpi .label{min-height:31px;font-size:10.5px;}
+    .kpi .value{font-size:23px;}
+    .kpi .sub{font-size:9.5px;}
+    .chart-card{padding:14px 13px;}
+    .chart-card canvas{max-height:235px;}
+    .toolbar{padding:10px;}
+    .search-box{min-width:100%;flex-basis:100%;}
+    .toolbar select{width:100%;flex-basis:100%;}
+    .toolbar .spacer{display:none;}
+    .toolbar .count-badge{margin-right:auto;}
+    .field-grid{grid-template-columns:1fr;}
+    .field.wide{grid-column:auto;}
+    .modal-overlay{padding:10px 7px;}
+    .modal{border-radius:14px;}
+    .modal-body{max-height:76vh;padding:14px 12px 4px;}
+    .modal-head,.modal-foot{padding:13px 14px;}
+    .toast-wrap{left:12px;right:12px;bottom:12px;}
+    .toast{min-width:0;max-width:none;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;}
+  }
+</style>
+</head>
+<body>
+
+<header class="app-header">
+  <div class="brand">
+    <div class="brand-mark" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3.5 12h3.2l1.8-4.1 3.1 8.2 2.1-5 1.2.9h5.6"/>
+        <path d="M20.6 8.2A4.7 4.7 0 0 0 12 5.9a4.7 4.7 0 0 0-8.6 2.3c-.7 4.8 4 8.7 8.6 11.3 4.6-2.6 9.3-6.5 8.6-11.3Z"/>
+      </svg>
+    </div>
+    <div class="brand-copy">
+      <span class="brand-kicker">Clinical Information System</span>
+      <h1>Stroke Unit Dashboard <span class="year-tag">2569 / 2026</span></h1>
+    </div>
+  </div>
+  <div class="header-actions">
+    <span class="status-pill" aria-live="polite"><span class="status-dot" id="statusDot"></span><span id="statusText">กำลังเชื่อมต่อ...</span></span>
+    <button class="icon-btn" id="themeToggle" title="สลับโหมดสี" aria-label="สลับโหมดสี">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.64 5.64l1.42 1.42M16.94 16.94l1.42 1.42M18.36 5.64l-1.42 1.42M7.06 16.94l-1.42 1.42"/>
+        <circle cx="12" cy="12" r="4"/>
+      </svg>
+    </button>
+    <button class="btn secondary" id="refreshBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8.1 8.1 0 0 0-15.5-2M4 4v5h5M4 13a8.1 8.1 0 0 0 15.5 2M20 20v-5h-5"/></svg>
+      <span class="btn-label">รีเฟรชข้อมูล</span>
+    </button>
+  </div>
+</header>
+
+<nav class="tabs" id="tabs" aria-label="เมนูหลัก">
+  <button data-tab="dashboard" class="active">
+    <span class="tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 13h6V4H4v9Zm0 7h6v-4H4v4Zm10 0h6v-9h-6v9Zm0-16v4h6V4h-6Z"/></svg></span>
+    ภาพรวม
+  </button>
+  <button data-tab="Patient2026">
+    <span class="tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="3.3"/><path d="M5 20c.6-4.1 3-6.2 7-6.2s6.4 2.1 7 6.2"/></svg></span>
+    ผู้ป่วย Stroke
+  </button>
+  <button data-tab="SFT2026">
+    <span class="tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 16.5V8h11v8.5M14 11h3l4 4v1.5h-2M7 16.5h8"/><circle cx="5" cy="18" r="2"/><circle cx="17" cy="18" r="2"/><path d="M8 10v4M6 12h4"/></svg></span>
+    Stroke Fast Track
+  </button>
+  <button data-tab="HHC2026">
+    <span class="tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 9-7 9 7M5 10v10h14V10M9 20v-6h6v6"/></svg></span>
+    เยี่ยมบ้าน (HHC)
+  </button>
+</nav>
+
+<main>
+  <!-- DASHBOARD -->
+  <section class="view active" id="view-dashboard">
+    <div class="page-heading">
+      <div>
+        <span class="page-kicker">Executive overview</span>
+        <h2>ภาพรวมการดูแลผู้ป่วยโรคหลอดเลือดสมอง</h2>
+        <p>ติดตามตัวชี้วัดสำคัญ แนวโน้มผู้ป่วย และผลลัพธ์การดูแลจากข้อมูลล่าสุดในระบบ</p>
+      </div>
+    </div>
+    <div class="dashboard-layout">
+      <aside class="filter-panel" id="dashboardFilters">
+        <h3>ตัวกรองข้อมูล</h3>
+        <div class="field">
+          <label for="dash_f_fy">ปีงบประมาณ</label>
+          <select id="dash_f_fy"><option value="">ทั้งหมด</option></select>
+        </div>
+        <div class="field">
+          <label for="dash_f_month">เดือน</label>
+          <select id="dash_f_month"><option value="">ทั้งหมด</option></select>
+        </div>
+        <div class="field">
+          <label for="dash_f_district">อำเภอ</label>
+          <select id="dash_f_district"><option value="">ทั้งหมด</option></select>
+        </div>
+        <div class="field">
+          <label for="dash_f_rtpa">SFT rt-PA</label>
+          <select id="dash_f_rtpa"><option value="">ทั้งหมด</option></select>
+        </div>
+        <button class="btn ghost" id="dash_f_reset">ล้างตัวกรอง</button>
+      </aside>
+      <div class="dashboard-main">
+        <div class="kpi-row" id="kpiRow"></div>
+        <div class="chart-grid" id="chartGrid"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Patient2026 -->
+  <section class="view" id="view-Patient2026">
+    <div class="page-heading">
+      <div>
+        <span class="page-kicker">Patient registry</span>
+        <h2>ทะเบียนผู้ป่วย Stroke</h2>
+        <p>ค้นหา คัดกรอง และจัดการข้อมูลผู้ป่วยโรคหลอดเลือดสมองประจำปี 2569</p>
+      </div>
+    </div>
+    <div class="dashboard-layout">
+      <aside class="filter-panel" id="patientDashboardFilters">
+        <h3>ตัวกรองข้อมูล</h3>
+        <div class="field">
+          <label for="patient_f_fy">ปีงบประมาณ</label>
+          <select id="patient_f_fy"><option value="">ทั้งหมด</option></select>
+        </div>
+        <div class="field">
+          <label for="patient_f_month">เดือน</label>
+          <select id="patient_f_month"><option value="">ทั้งหมด</option></select>
+        </div>
+        <div class="field">
+          <label for="patient_f_district">อำเภอ</label>
+          <select id="patient_f_district"><option value="">ทั้งหมด</option></select>
+        </div>
+        <div class="field">
+          <label for="patient_f_dx">Diagnosis</label>
+          <select id="patient_f_dx"><option value="">ทั้งหมด</option></select>
+        </div>
+        <div class="field">
+          <label for="patient_f_med">ได้ยา</label>
+          <select id="patient_f_med"><option value="">ทั้งหมด</option></select>
+        </div>
+        <div class="field">
+          <label for="patient_f_status">สถานะ</label>
+          <select id="patient_f_status"><option value="">ทั้งหมด</option></select>
+        </div>
+        <button class="btn ghost" id="patient_f_reset">ล้างตัวกรอง</button>
+      </aside>
+      <div class="dashboard-main">
+        <div class="kpi-row" id="patientKpiRow"></div>
+        <div class="chart-grid" id="patientChartGrid"></div>
+      </div>
+    </div>
+    <div class="toolbar">
+      <label class="search-box">
+        <span class="sr-only">ค้นหาผู้ป่วย Stroke</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        <input type="text" id="Patient2026_search" placeholder="ค้นหา ชื่อ / HN / AN / Diagnosis ...">
+      </label>
+      <select id="Patient2026_f_c5"><option value="">อำเภอ: ทั้งหมด</option></select>
+      <select id="Patient2026_f_c13"><option value="">Diagnosis: ทั้งหมด</option></select>
+      <select id="Patient2026_f_c14"><option value="">ประเภท: ทั้งหมด</option></select>
+      <select id="Patient2026_f_c19"><option value="">สถานะจำหน่าย: ทั้งหมด</option></select>
+      <span class="spacer"></span>
+      <span class="count-badge" id="Patient2026_count"></span>
+      <button class="btn" id="Patient2026_addBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+        เพิ่มผู้ป่วย
+      </button>
+    </div>
+    <div class="table-wrap"><table><thead><tr id="Patient2026_thead"></tr></thead><tbody id="Patient2026_tbody"></tbody></table></div>
+    <div class="pagination" id="Patient2026_pager"></div>
+  </section>
+
+  <!-- SFT2026 -->
+  <section class="view" id="view-SFT2026">
+    <div class="page-heading">
+      <div>
+        <span class="page-kicker">Emergency pathway</span>
+        <h2>Stroke Fast Track</h2>
+        <p>ติดตามกระบวนการรักษาเร่งด่วน การได้รับยา rt-PA และสถานะการดูแลผู้ป่วย</p>
+      </div>
+    </div>
+    <div class="dashboard-layout">
+      <aside class="filter-panel" id="sftDashboardFilters">
+        <h3>ตัวกรองข้อมูล</h3>
+        <div class="field">
+          <label for="sft_f_fy">ปีงบประมาณ</label>
+          <select id="sft_f_fy"><option value="">ทั้งหมด</option></select>
+        </div>
+        <div class="field">
+          <label for="sft_f_month">เดือน</label>
+          <select id="sft_f_month"><option value="">ทั้งหมด</option></select>
+        </div>
+        <div class="field">
+          <label for="sft_f_district">อำเภอ</label>
+          <select id="sft_f_district"><option value="">ทั้งหมด</option></select>
+        </div>
+        <div class="field">
+          <label for="sft_f_dx">Diagnosis</label>
+          <select id="sft_f_dx"><option value="">ทั้งหมด</option></select>
+        </div>
+        <div class="field">
+          <label for="sft_f_med">ได้ยา</label>
+          <select id="sft_f_med"><option value="">ทั้งหมด</option></select>
+        </div>
+        <div class="field">
+          <label for="sft_f_status">สถานะ</label>
+          <select id="sft_f_status"><option value="">ทั้งหมด</option></select>
+        </div>
+        <button class="btn ghost" id="sft_f_reset">ล้างตัวกรอง</button>
+      </aside>
+      <div class="dashboard-main">
+        <div class="kpi-row" id="sftKpiRow"></div>
+        <div class="chart-grid" id="sftChartGrid"></div>
+      </div>
+    </div>
+    <div class="toolbar">
+      <label class="search-box">
+        <span class="sr-only">ค้นหารายการ Stroke Fast Track</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        <input type="text" id="SFT2026_search" placeholder="ค้นหา ชื่อ / HN / Diagnosis ...">
+      </label>
+      <select id="SFT2026_f_c6"><option value="">อำเภอ: ทั้งหมด</option></select>
+      <select id="SFT2026_f_c9"><option value="">ได้ยา: ทั้งหมด</option></select>
+      <select id="SFT2026_f_c11"><option value="">สถานะ: ทั้งหมด</option></select>
+      <span class="spacer"></span>
+      <span class="count-badge" id="SFT2026_count"></span>
+      <button class="btn" id="SFT2026_addBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+        เพิ่มรายการ
+      </button>
+    </div>
+    <div class="table-wrap"><table><thead><tr id="SFT2026_thead"></tr></thead><tbody id="SFT2026_tbody"></tbody></table></div>
+    <div class="pagination" id="SFT2026_pager"></div>
+  </section>
+
+  <!-- HHC2026 -->
+  <section class="view" id="view-HHC2026">
+    <div class="page-heading">
+      <div>
+        <span class="page-kicker">Continuity of care</span>
+        <h2>ติดตามเยี่ยมบ้าน (HHC)</h2>
+        <p>บริหารข้อมูลการติดตามต่อเนื่องหลังจำหน่าย พร้อมผลลัพธ์ด้าน BI, NIHSS และ MRS</p>
+      </div>
+    </div>
+    <div class="dashboard-layout">
+      <aside class="filter-panel" id="hhcDashboardFilters">
+        <h3>ตัวกรองข้อมูล</h3>
+        <div class="field">
+          <label for="hhc_f_fy">ปีงบประมาณ</label>
+          <select id="hhc_f_fy"><option value="">ทั้งหมด</option></select>
+        </div>
+        <div class="field">
+          <label for="hhc_f_month">เดือน</label>
+          <select id="hhc_f_month"><option value="">ทั้งหมด</option></select>
+        </div>
+        <div class="field">
+          <label for="hhc_f_district">อำเภอ</label>
+          <select id="hhc_f_district"><option value="">ทั้งหมด</option></select>
+        </div>
+        <div class="field">
+          <label for="hhc_f_dx">Diagnosis</label>
+          <select id="hhc_f_dx"><option value="">ทั้งหมด</option></select>
+        </div>
+        <button class="btn ghost" id="hhc_f_reset">ล้างตัวกรอง</button>
+      </aside>
+      <div class="dashboard-main">
+        <div class="kpi-row" id="hhcKpiRow"></div>
+        <div class="chart-grid" id="hhcChartGrid"></div>
+      </div>
+    </div>
+    <div class="toolbar">
+      <label class="search-box">
+        <span class="sr-only">ค้นหารายการเยี่ยมบ้าน</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        <input type="text" id="HHC2026_search" placeholder="ค้นหา ชื่อ / HN / Diagnosis ...">
+      </label>
+      <select id="HHC2026_f_c5"><option value="">อำเภอ: ทั้งหมด</option></select>
+      <select id="HHC2026_f_c27"><option value="">ผลการเยี่ยมบ้าน: ทั้งหมด</option></select>
+      <span class="spacer"></span>
+      <span class="count-badge" id="HHC2026_count"></span>
+      <button class="btn" id="HHC2026_addBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+        เพิ่มรายการ
+      </button>
+    </div>
+    <div class="table-wrap"><table><thead><tr id="HHC2026_thead"></tr></thead><tbody id="HHC2026_tbody"></tbody></table></div>
+    <div class="pagination" id="HHC2026_pager"></div>
+  </section>
+</main>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-head"><h2 id="modalTitle">เพิ่มข้อมูล</h2><button class="icon-btn" id="modalClose" aria-label="ปิดหน้าต่าง">✕</button></div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-foot">
+      <button class="btn secondary" id="modalCancel">ยกเลิก</button>
+      <button class="btn" id="modalSave">บันทึก</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-wrap" id="toastWrap"></div>
+
+<script>
+/* ===================== CONFIG ===================== */
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbyi_EzKJFb-ffNLXoJyCsmk3aoGQw1tdiLxXj65IfJCC-DkZs4C3L6Z953YIeUA5wCn4Q/exec';
+
+const PALETTE = ['--s1','--s2','--s3','--s4','--s5','--s6','--s7','--s8'];
+function cssVar(name){ return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
+function slotColor(i){ return cssVar(PALETTE[i % PALETTE.length]); }
+
+/* ===================== FIELD CONFIG (mirrors Code.gs) ===================== */
+const FIELDS = {
+Patient2026: [
+  {k:'c1',l:'ลำดับ',t:'number',g:'ข้อมูลทั่วไป',ro:true},
+  {k:'c2',l:'วันที่รับผู้ป่วย',t:'date',g:'ข้อมูลทั่วไป'},
+  {k:'c3',l:'ประเภทรับ',t:'select',g:'ข้อมูลทั่วไป',o:['Refer Back MT','ยกยอด','รับ Refer รพช','รับ Refer รพศ','รับย้าย ICU','รับย้ายพิเศษ','รับย้ายศัลยกรรมชาย','รับย้ายศัลยกรรมหญิง','รับย้ายอายุรกรรมชาย','รับย้ายอายุรกรรมหญิง','รับใหม่']},
+  {k:'c4',l:'มาโดย',t:'select',g:'ข้อมูลทั่วไป',o:['นอกเขตEMS กู้ภัย','นอกเขตมาเอง','ในเขต EMS กู้ภัย','ในเขต Ems กู้ภัย','ในเขต มาเอง','ในโรงพยาบาล']},
+  {k:'c5',l:'อำเภอ',t:'select',g:'ข้อมูลทั่วไป',o:['ทุ่งเสลี่ยม','นอกดขตต่างจังหวัด','นอกเขตในจังหวัด','ศรีนคร','ศรีสัชนาลัย','ศรีสำโรง','สวรรคโลก']},
+  {k:'c6',l:'ตำบล',t:'text',g:'ข้อมูลทั่วไป',o:['คลองตาล','ทับผึ้ง','นอกเขต','นาขุนไกร','บ้านซ่าน','บ้านนา','บ้านไร่','ราวต้นจันทร์','วังทอง','วังลึก','วังใหญ่','วัดเกาะ','สามเรือน','เกาะตาเลี้ยง']},
+  {k:'c7',l:'เตียง',t:'text',g:'ข้อมูลทั่วไป',o:['1','2','3','4','5','6','7','8','SU_X1']},
+  {k:'c8',l:'ชื่อ-สกุล ผู้ป่วย',t:'text',g:'ข้อมูลทั่วไป'},
+  {k:'c9',l:'เพศ',t:'select',g:'ข้อมูลทั่วไป',o:['ชาย','หญิง']},
+  {k:'c10',l:'อายุ (ปี)',t:'number',g:'ข้อมูลทั่วไป'},
+  {k:'c11',l:'HN ผู้ป่วย',t:'text',g:'ข้อมูลทั่วไป'},
+  {k:'c12',l:'AN ผู้ป่วย',t:'text',g:'ข้อมูลทั่วไป'},
+  {k:'c13',l:'Diagnosis',t:'select',g:'ข้อมูลทางคลินิกแรกรับ',o:['Bell Palsy','Delirium','Dizzeness','Hemorrhage','Ischemic','Non Stroke','TIA']},
+  {k:'c14',l:'ประเภท',t:'select',g:'ข้อมูลทางคลินิกแรกรับ',o:['Non SFT','SFT','ยกยอด']},
+  {k:'c15',l:'เหตุผลที่ไม่ได้ยา',t:'text',g:'ข้อมูลทางคลินิกแรกรับ',o:['Hemorrhage','High Risk','NiHSS<4','Non SFT','Non Stroke','Onset เกิน','Onset ไม่ชัดเจน','Post MT ได้ยา rtpa','Post MT ไม่ได้ยา rtpa','large infarction','rt-PA','ญาติปฏิเสธ','ตื่นนอน','ผู้ป่วยปฏิเสธ','มีข้อห้ามในcontraindication','มีประวัติ Hemorrhage','เป็น stroke มาก่อน']},
+  {k:'c16',l:'มา รพ.ช้ากว่า 4ชม',t:'text',g:'ข้อมูลทางคลินิกแรกรับ',o:['Onset ไม่ชัดเจน','SFT','ผู้ป่วยไม่อยากมา รพ','มาตรวจไม่ได้admit','รพช. ไม่ได้ refer มาทันที','เป็นตอนตื่นนอน','ไป clinic ก่อนมา รพ.','ไม่ทราบเป็นภาวะเร่งด่วน','ไม่มีคนพามา รพ.']},
+  {k:'c17',l:'ที่อยู่ผู้ป่วย',t:'textarea',g:'การจำหน่าย'},
+  {k:'c18',l:'ว/ด/ป จำหน่าย',t:'date',g:'การจำหน่าย'},
+  {k:'c19',l:'สถานะจำหน่าย',t:'select',g:'การจำหน่าย',o:['Refer for MT','Refer รพช','Refer สุโขทัย','referสุโขทัย','กลับบ้าน','ตาย','ย้ายออก','ไม่สมัครอยู่']},
+  {k:'c20',l:'ย้ายไป',t:'text',g:'การจำหน่าย',o:['ICU','ICU ผ่าหัว','พิเศษ','พิเศษ 6/2','พิเศษ6/1','พิเศษ6/3','พิเศษ6/4','ศัลยกรรมหญิง','อายุรกรรมชาย','อายุรกรรมหญิง']},
+  {k:'c21',l:'วันนอนรวม',t:'number',g:'การจำหน่าย'},
+  {k:'c22',l:'เหตุผลที่ย้าย',t:'text',g:'การจำหน่าย',o:['Non Stroke','ต้องการห้องพิเศษ','พ้นระยะ acute','เตียงเต็ม']},
+  {k:'c23',l:'โรคร่วม',t:'textarea',g:'โรคร่วม / การดูแลระหว่างนอน'},
+  {k:'c24',l:'ประวัติทานยา',t:'textarea',g:'โรคร่วม / การดูแลระหว่างนอน'},
+  {k:'c25',l:'ผูกยึด',t:'select',g:'โรคร่วม / การดูแลระหว่างนอน',o:['ผูกยึด','ไม่ผูกยึด']},
+  {k:'c26',l:'Barden Scale',t:'number',g:'โรคร่วม / การดูแลระหว่างนอน'},
+  {k:'c27',l:'On ET-tube',t:'select',g:'โรคร่วม / การดูแลระหว่างนอน',o:['CPAP','On Cannula','On ET-tube','On HFNC','On O2Mask','Room Air']},
+  {k:'c28',l:'วันใส่ ET รวม',t:'number',g:'โรคร่วม / การดูแลระหว่างนอน'},
+  {k:'c29',l:'ET complication',t:'text',g:'โรคร่วม / การดูแลระหว่างนอน',o:['VAP']},
+  {k:'c30',l:"Foley's cath",t:'select',g:'โรคร่วม / การดูแลระหว่างนอน',o:['ใส่ F/C','ไม่ใส่ F/C']},
+  {k:'c31',l:"วันใส่ Foley' รวม",t:'number',g:'โรคร่วม / การดูแลระหว่างนอน'},
+  {k:'c32',l:'FC complication',t:'text',g:'โรคร่วม / การดูแลระหว่างนอน',o:['CAUTI','HAP']},
+  {k:'c33',l:'อุปกรณ์ D/C',t:'text',g:'โรคร่วม / การดูแลระหว่างนอน',o:["On Foley's cath",'On NG',"On NG,On Foley's cath",'ไม่มีอุปกรณ์']},
+  {k:'c34',l:'Fever',t:'select',g:'โรคร่วม / การดูแลระหว่างนอน',o:['มีไข้ ก่อน 48 ชม','มีไข้ หลัง 48 ชม.','ไม่มีไข้']},
+  {k:'c35',l:'ยาต้านเกร็ดเลือด',t:'text',g:'ยา',o:['Hemorrhage','Infarct ขนาดใหญ่มี hemorrhage','Infarct ขนาดใหญ่ได้ยาหลัง admit 48 ชม','MT เริ่มยาหลัง 48 hrหลังทำ','MT เริ่มยาใน 48 hrหลังทำ','MTมี hemorrhagic transformation','rtpa','warfarin ใน 48 ชั่วโมงหลังมีอาการ','มีhemorrhagic transform ได้ยาหลังCT 4 วัน','อาการ>48 hrได้รับยา 48 ชม.หลัง admit','ได้รับยา 48 ชม.หลัง admit','ได้รับยา 48 ชม.หลังมีอาการ','ไม่ได้ยา','ไม่ได้ยาInfarct ขนาดใหญ่']},
+  {k:'c36',l:'ยากลับบ้าน',t:'text',g:'ยา',o:['Apixaban','Dabigatran','Hemorrhage','Hemorrhage จากทำ MT','Hemorrhagic transformation','Plavix','Warfarin','ได้ ASA','ได้ plavix','ไม่ได้ ASA']},
+  {k:'c37',l:'NIHSS ก่อน',t:'number',g:'การประเมิน (NIHSS / ADL / MRS)'},
+  {k:'c38',l:'NIHSS หลัง',t:'number',g:'การประเมิน (NIHSS / ADL / MRS)'},
+  {k:'c39',l:'Progressive Stroke',t:'select',g:'การประเมิน (NIHSS / ADL / MRS)',o:['ดีขึ้น','มี','เท่าเดิม','แย่ลง','ไม่มี']},
+  {k:'c40',l:'ADL ก่อน',t:'number',g:'การประเมิน (NIHSS / ADL / MRS)'},
+  {k:'c41',l:'ADL หลัง',t:'number',g:'การประเมิน (NIHSS / ADL / MRS)'},
+  {k:'c42',l:'MRS ก่อน',t:'number',g:'การประเมิน (NIHSS / ADL / MRS)'},
+  {k:'c43',l:'MRS หลัง',t:'number',g:'การประเมิน (NIHSS / ADL / MRS)'},
+  {k:'c44',l:'มีอาการ (ระยะเวลา)',t:'text',g:'ตัวชี้วัดคุณภาพการดูแล',o:['ไม่ถึงวัน','1 วัน','2 วัน','3 วัน','4 วัน','5 วัน','6 วัน','7 วัน','10 วัน']},
+  {k:'c45',l:'อาการ7วัน DTX ใน 24hr',t:'select',g:'ตัวชี้วัดคุณภาพการดูแล',o:['ได้','ไม่ได้']},
+  {k:'c46',l:'อาการ7วัน CT ใน 24hr',t:'select',g:'ตัวชี้วัดคุณภาพการดูแล',o:['ได้','ไม่ได้']},
+  {k:'c47',l:'อาการ7วัน มี care map',t:'select',g:'ตัวชี้วัดคุณภาพการดูแล',o:['ได้','ไม่ได้']},
+  {k:'c48',l:'รักษาฟื้นฟูป้องกันซ้ำ',t:'select',g:'ตัวชี้วัดคุณภาพการดูแล',o:['ได้','ไม่ได้']},
+  {k:'c49',l:'อาการ7วัน EKG ใน 24hr',t:'select',g:'ตัวชี้วัดคุณภาพการดูแล',o:['ได้','ไม่ได้']},
+  {k:'c50',l:'อาการ72hr กลืนใน72hr',t:'select',g:'ตัวชี้วัดคุณภาพการดูแล',o:['ได้','ไม่ได้']},
+  {k:'c51',l:'ติดตามฟื้นฟู/ส่งต่อหลัง D/C',t:'select',g:'ตัวชี้วัดคุณภาพการดูแล',o:['ได้','ไม่ได้','refer','ตาย']},
+  {k:'c52',l:'อาการ72hr อยู่ใน SU',t:'select',g:'ตัวชี้วัดคุณภาพการดูแล',o:['ได้','ไม่ได้']},
+  {k:'c53',l:'อาการ72hr EKG mo 48hr',t:'text',g:'ตัวชี้วัดคุณภาพการดูแล',o:['ได้','1 ปฎิทิน','2 ปฎิทิน','3 ปฎิทิน']},
+  {k:'c54',l:'Readmit',t:'select',g:'ตัวชี้วัดคุณภาพการดูแล',o:['ได้','ไม่ได้']},
+  {k:'c55',l:'บุหรี่/สุรา',t:'select',g:'ตัวชี้วัดคุณภาพการดูแล',o:['ไม่ใช้','บุหรี่','สุรา','ทั้ง2']},
+  {k:'c56',l:'เลิกบุหรี่/สุรา',t:'text',g:'ตัวชี้วัดคุณภาพการดูแล',o:['ไม่ใช้','ส่ง','ส่งปรึกษา','ไม่ส่ง','ไม่ส่งปรึกษา','ไม่มี']},
+  {k:'c57',l:'DVT',t:'select',g:'ตัวชี้วัดคุณภาพการดูแล',o:['เกิด','ไม่เกิด']},
+  {k:'c58',l:'แผล',t:'text',g:'ตัวชี้วัดคุณภาพการดูแล',o:['ไม่มี','gr.2']},
+  {k:'c59',l:'Progressive',t:'select',g:'ตัวชี้วัดคุณภาพการดูแล',o:['ใช่','ไม่ใช่','รพช','ไม่ได้ CT ยาติ NR']},
+],
+SFT2026: [
+  {k:'c1',l:'ลำดับ',t:'number',g:'ข้อมูลทั่วไป',ro:true},
+  {k:'c2',l:'วันที่รับผู้ป่วย',t:'date',g:'ข้อมูลทั่วไป'},
+  {k:'c3',l:'HN ผู้ป่วย',t:'text',g:'ข้อมูลทั่วไป'},
+  {k:'c4',l:'ชื่อ สกุล ผู้ป่วย',t:'text',g:'ข้อมูลทั่วไป'},
+  {k:'c5',l:'มาโดย',t:'select',g:'ข้อมูลทั่วไป',o:['EMS','Refer','in hospital','มาเอง']},
+  {k:'c6',l:'อำเภอ',t:'select',g:'ข้อมูลทั่วไป',o:['In Hospital','ทุ่งเสลี่ยม','ศรีนคร','ศรีสัชนาลัย','ศรีสำโรง','สวรรคโลก','อื่นๆ']},
+  {k:'c7',l:'ตำบล',t:'text',g:'ข้อมูลทั่วไป',o:['คลองตาล','ต่างอำเภอ','ทับผึ้ง','นาขุนไกร','บ้านซ่าน','บ้านนา','บ้านไร่','ราวต้นจันทร์','วังทอง','วังลึก','วังใหญ่','วัดเกาะ','สามเรือน','เกาะตาเลี้ยง']},
+  {k:'c8',l:'Diagnosis',t:'select',g:'ข้อมูลการรักษา',o:['Hemorrhage','Ischemic','Non Stroke','TIA']},
+  {k:'c9',l:'ได้ยา',t:'select',g:'ข้อมูลการรักษา',o:['rt-PA','rt-PA ศว','rt-PA สว','ไม่ได้ยา']},
+  {k:'c10',l:'เหตุผลที่ไม่ได้ยา',t:'text',g:'ข้อมูลการรักษา',o:['Hemorrhage','Large Infarc','NIHSS<4','Non Stroke','Onset ไม่ชัดเจน','Onsetเกิน','rt-PA','ญาติปฏิเสธ','มีข้อห้ามในcontraindication','เป็นตื่นนอน','แพทย์ระบุ High risk']},
+  {k:'c11',l:'สถานะ',t:'select',g:'ข้อมูลการรักษา',o:['Admit Stroke','Admit Ward','Discharge','Refer กลับ รพช','Refer รพ พิษณุเวช','Refer รพ พุทธ','Refer รพ.สุโขทัย','refer for MT ได้ rt-PA','refer for MT ไม่ได้ rt PA','ปฏิเสธนอน']},
+  {k:'c12',l:'พยาบาลผู้บันทึก',t:'text',g:'อื่นๆ'},
+],
+HHC2026: [
+  {k:'c1',l:'ลำดับที่',t:'number',g:'ข้อมูลทั่วไป',ro:true},
+  {k:'c2',l:'ชื่อ-สกุล',t:'text',g:'ข้อมูลทั่วไป'},
+  {k:'c3',l:'HN',t:'text',g:'ข้อมูลทั่วไป'},
+  {k:'c4',l:'Diagnosis',t:'text',g:'ข้อมูลทั่วไป',o:['Ischemic','Hemorrhage','TIA','Non Stroke']},
+  {k:'c5',l:'อำเภอ',t:'select',g:'ข้อมูลทั่วไป',o:['ทุ่งเสลี่ยม','ศรีนคร','ศรีสัชนาลัย','ศรีสำโรง','สวรรคโลก','อื่นๆ']},
+  {k:'c6',l:'สถานที่ส่ง HHC (ตำบล)',t:'text',g:'ข้อมูลทั่วไป'},
+  {k:'c7',l:'วันที่ admit',t:'date',g:'Admit / Discharge'},
+  {k:'c8',l:'วันที่ D/C',t:'date',g:'Admit / Discharge'},
+  {k:'c9',l:'BI admit',t:'number',g:'Admit / Discharge'},
+  {k:'c10',l:'BI D/C',t:'number',g:'Admit / Discharge'},
+  {k:'c11',l:'BI จำหน่าย (แนวโน้ม)',t:'select',g:'Admit / Discharge',o:['ดีขึ้น','เท่าเดิม','แย่ลง']},
+  {k:'c12',l:'วันติดตาม BI 3 เดือน',t:'date',g:'ติดตาม BI'},
+  {k:'c13',l:'BI 3 เดือน',t:'number',g:'ติดตาม BI'},
+  {k:'c14',l:'วันติดตาม BI 6 เดือน',t:'date',g:'ติดตาม BI'},
+  {k:'c15',l:'BI 6 เดือน',t:'number',g:'ติดตาม BI'},
+  {k:'c16',l:'QOL D/C',t:'number',g:'ติดตาม BI'},
+  {k:'c17',l:'NIHSS admit',t:'number',g:'NIHSS / MRS'},
+  {k:'c18',l:'NIHSS D/C',t:'number',g:'NIHSS / MRS'},
+  {k:'c19',l:'NIHSS จำหน่าย (แนวโน้ม)',t:'select',g:'NIHSS / MRS',o:['ดีขึ้น','เท่าเดิม','แย่ลง']},
+  {k:'c20',l:'MRS admit',t:'number',g:'NIHSS / MRS'},
+  {k:'c21',l:'MRS D/C',t:'number',g:'NIHSS / MRS'},
+  {k:'c22',l:'MRS จำหน่าย (แนวโน้ม)',t:'select',g:'NIHSS / MRS',o:['ดีขึ้น','เท่าเดิม','แย่ลง']},
+  {k:'c23',l:'วันติดตาม MRS 3 เดือน',t:'date',g:'ติดตาม MRS'},
+  {k:'c24',l:'MRS 3 เดือน',t:'number',g:'ติดตาม MRS'},
+  {k:'c25',l:'วันติดตาม MRS 6 เดือน',t:'date',g:'ติดตาม MRS'},
+  {k:'c26',l:'MRS 6 เดือน',t:'number',g:'ติดตาม MRS'},
+  {k:'c27',l:'ผลการเยี่ยมบ้าน',t:'select',g:'ผลลัพธ์',o:['ดีขึ้น','เท่าเดิม','แย่ลง','referกลับ','refer รพ.ศูนย์','dead']},
+  {k:'c28',l:'เบอร์โทร',t:'text',g:'ผลลัพธ์'},
+]
+};
+
+const SUMMARY = {
+  Patient2026: ['c1','c2','c8','c11','c13','c14','c19','c21'],
+  SFT2026: ['c1','c2','c4','c3','c8','c9','c11'],
+  HHC2026: ['c1','c2','c3','c4','c7','c11','c27'],
+};
+
+const SHEET_TITLES = {Patient2026:'ผู้ป่วย Stroke', SFT2026:'Stroke Fast Track', HHC2026:'เยี่ยมบ้าน (HHC)'};
+
+let STATE = { data:{Patient2026:{headers:[],rows:[]},SFT2026:{headers:[],rows:[]},HHC2026:{headers:[],rows:[]}},
+  page:{Patient2026:1,SFT2026:1,HHC2026:1}, pageSize:20, editing:null };
+
+/* ===================== API ===================== */
+async function apiGet(){
+  const res = await fetch(GAS_URL + '?action=getAll');
+  if(!res.ok) throw new Error('HTTP ' + res.status);
+  return res.json();
+}
+async function apiPost(payload){
+  const res = await fetch(GAS_URL, { method:'POST', body: JSON.stringify(payload) });
+  if(!res.ok) throw new Error('HTTP ' + res.status);
+  return res.json();
+}
+
+function setStatus(state, text){
+  const dot = document.getElementById('statusDot');
+  dot.className = 'status-dot ' + state;
+  document.getElementById('statusText').textContent = text;
+}
+
+function toast(msg, isErr){
+  const wrap = document.getElementById('toastWrap');
+  const el = document.createElement('div');
+  el.className = 'toast' + (isErr ? ' err' : '');
+  el.textContent = msg;
+  wrap.appendChild(el);
+  setTimeout(()=>el.remove(), 3800);
+}
+
+async function loadAll(){
+  setStatus('busy','กำลังโหลดข้อมูล...');
+  try{
+    const json = await apiGet();
+    if(json.status !== 'ok') throw new Error(json.message || 'load error');
+    STATE.data = json.sheets;
+    setStatus('ok','เชื่อมต่อ Google Sheet สำเร็จ');
+    populateFilters();
+    populateDashboardFilters();
+    populateSftDashFilters();
+    populatePatientDashFilters();
+    populateHhcDashFilters();
+    renderDashboard();
+    if(document.getElementById('view-SFT2026').classList.contains('active')) renderSftDashboard();
+    if(document.getElementById('view-Patient2026').classList.contains('active')) renderPatientDashboard();
+    if(document.getElementById('view-HHC2026').classList.contains('active')) renderHhcDashboard();
+    ['Patient2026','SFT2026','HHC2026'].forEach(renderTable);
+  }catch(err){
+    setStatus('err','เชื่อมต่อไม่สำเร็จ: ' + err.message);
+    toast('โหลดข้อมูลไม่สำเร็จ: ' + err.message, true);
+  }
+}
+
+/* ===================== HELPERS ===================== */
+function fmtDate(iso){
+  if(!iso) return '';
+  const p = String(iso).split('-');
+  if(p.length !== 3) return iso;
+  return p[2] + '/' + p[1] + '/' + p[0];
+}
+function fieldByKey(sheet,key){ return FIELDS[sheet].find(f=>f.k===key); }
+function displayVal(sheet,key,val){
+  const f = fieldByKey(sheet,key);
+  if(!f) return val ?? '';
+  if(f.t === 'date') return fmtDate(val);
+  return (val === null || val === undefined) ? '' : val;
+}
+function rowMatchesSearch(sheet,row,q){
+  if(!q) return true;
+  q = q.toLowerCase();
+  return SUMMARY[sheet].some(k => String(row[k] ?? '').toLowerCase().includes(q))
+    || Object.values(row).some(v => String(v ?? '').toLowerCase().includes(q));
+}
+function uniqueValues(sheet,key){
+  const set = new Set();
+  (STATE.data[sheet]?.rows || []).forEach(r => { if(r[key]) set.add(r[key]); });
+  return [...set].sort();
+}
+
+/* ===================== FILTERS ===================== */
+function populateFilters(){
+  const map = {
+    Patient2026: ['c5','c13','c14','c19'],
+    SFT2026: ['c6','c9','c11'],
+    HHC2026: ['c5','c27'],
+  };
+  Object.entries(map).forEach(([sheet,keys])=>{
+    keys.forEach(key=>{
+      const sel = document.getElementById(sheet+'_f_'+key);
+      if(!sel) return;
+      const current = sel.value;
+      const first = sel.options[0];
+      sel.innerHTML = '';
+      sel.appendChild(first);
+      uniqueValues(sheet,key).forEach(v=>{
+        const opt = document.createElement('option');
+        opt.value = v; opt.textContent = v;
+        sel.appendChild(opt);
+      });
+      sel.value = current;
+    });
+  });
+}
+
+/* ===================== DASHBOARD FILTERS (ปีงบประมาณ / เดือน / อำเภอ / SFT rt-PA) ===================== */
+// เรียงเดือนตามปีงบประมาณกระทรวงสาธารณสุข: ต.ค. - ก.ย.
+const MOPH_MONTHS = [
+  {v:10,l:'ตุลาคม'},{v:11,l:'พฤศจิกายน'},{v:12,l:'ธันวาคม'},
+  {v:1,l:'มกราคม'},{v:2,l:'กุมภาพันธ์'},{v:3,l:'มีนาคม'},
+  {v:4,l:'เมษายน'},{v:5,l:'พฤษภาคม'},{v:6,l:'มิถุนายน'},
+  {v:7,l:'กรกฎาคม'},{v:8,l:'สิงหาคม'},{v:9,l:'กันยายน'}
+];
+const DASH_DISTRICT_KEY = { Patient2026:'c5', SFT2026:'c6', HHC2026:'c5' };
+const DASH_DATE_KEY = { Patient2026:'c2', SFT2026:'c2', HHC2026:'c7' };
+
+function fiscalYearOf(iso){
+  const p = String(iso||'').split('-');
+  if(p.length < 2) return null;
+  const y = Number(p[0]), m = Number(p[1]);
+  if(!y || !m) return null;
+  const be = y + 543;
+  return m >= 10 ? be + 1 : be;
+}
+function monthOf(iso){
+  const p = String(iso||'').split('-');
+  if(p.length < 2) return null;
+  const m = Number(p[1]);
+  return m || null;
+}
+
+function populateDashboardFilters(){
+  const fySel = document.getElementById('dash_f_fy');
+  const monthSel = document.getElementById('dash_f_month');
+  const districtSel = document.getElementById('dash_f_district');
+  const rtpaSel = document.getElementById('dash_f_rtpa');
+  if(!fySel) return;
+
+  const fySet = new Set();
+  ['Patient2026','SFT2026','HHC2026'].forEach(sheet=>{
+    const dateKey = DASH_DATE_KEY[sheet];
+    (STATE.data[sheet]?.rows || []).forEach(r=>{
+      const fy = fiscalYearOf(r[dateKey]);
+      if(fy) fySet.add(fy);
+    });
+  });
+  const fyCurrent = fySel.value;
+  fySel.innerHTML = '<option value="">ทั้งหมด</option>' +
+    [...fySet].sort((a,b)=>b-a).map(fy=>`<option value="${fy}">${fy}</option>`).join('');
+  fySel.value = fyCurrent;
+
+  if(!monthSel.dataset.built){
+    monthSel.innerHTML = '<option value="">ทั้งหมด</option>' +
+      MOPH_MONTHS.map(m=>`<option value="${m.v}">${m.l}</option>`).join('');
+    monthSel.dataset.built = '1';
+  }
+
+  const districtSet = new Set();
+  ['Patient2026','SFT2026','HHC2026'].forEach(sheet=>{
+    const key = DASH_DISTRICT_KEY[sheet];
+    (STATE.data[sheet]?.rows || []).forEach(r=>{ if(r[key]) districtSet.add(r[key]); });
+  });
+  const districtCurrent = districtSel.value;
+  districtSel.innerHTML = '<option value="">ทั้งหมด</option>' +
+    [...districtSet].sort().map(v=>`<option value="${escapeHtml(v)}">${escapeHtml(v)}</option>`).join('');
+  districtSel.value = districtCurrent;
+
+  const rtpaSet = new Set();
+  (STATE.data.SFT2026?.rows || []).forEach(r=>{ if(r.c9) rtpaSet.add(r.c9); });
+  const rtpaCurrent = rtpaSel.value;
+  rtpaSel.innerHTML = '<option value="">ทั้งหมด</option>' +
+    [...rtpaSet].sort().map(v=>`<option value="${escapeHtml(v)}">${escapeHtml(v)}</option>`).join('');
+  rtpaSel.value = rtpaCurrent;
+}
+
+function getDashboardFilters(){
+  return {
+    fy: document.getElementById('dash_f_fy')?.value || '',
+    month: document.getElementById('dash_f_month')?.value || '',
+    district: document.getElementById('dash_f_district')?.value || '',
+    rtpa: document.getElementById('dash_f_rtpa')?.value || '',
+  };
+}
+
+function applyDashboardFilters(sheet, rows, f){
+  const dateKey = DASH_DATE_KEY[sheet];
+  const districtKey = DASH_DISTRICT_KEY[sheet];
+  return rows.filter(r=>{
+    if(f.fy && String(fiscalYearOf(r[dateKey])) !== f.fy) return false;
+    if(f.month && String(monthOf(r[dateKey])) !== f.month) return false;
+    if(f.district && r[districtKey] !== f.district) return false;
+    if(sheet === 'SFT2026' && f.rtpa && r.c9 !== f.rtpa) return false;
+    return true;
+  });
+}
+
+/* ===================== SFT2026 DASHBOARD FILTERS ===================== */
+function populateSftDashFilters(){
+  const fySel = document.getElementById('sft_f_fy');
+  if(!fySel) return;
+
+  const fySet = new Set();
+  (STATE.data.SFT2026?.rows || []).forEach(r=>{ const fy = fiscalYearOf(r.c2); if(fy) fySet.add(fy); });
+  const fyCurrent = fySel.value;
+  fySel.innerHTML = '<option value="">ทั้งหมด</option>' +
+    [...fySet].sort((a,b)=>b-a).map(fy=>`<option value="${fy}">${fy}</option>`).join('');
+  fySel.value = fyCurrent;
+
+  const monthSel = document.getElementById('sft_f_month');
+  if(!monthSel.dataset.built){
+    monthSel.innerHTML = '<option value="">ทั้งหมด</option>' +
+      MOPH_MONTHS.map(m=>`<option value="${m.v}">${m.l}</option>`).join('');
+    monthSel.dataset.built = '1';
+  }
+
+  const selectMap = { sft_f_district:'c6', sft_f_dx:'c8', sft_f_med:'c9', sft_f_status:'c11' };
+  Object.entries(selectMap).forEach(([id,key])=>{
+    const sel = document.getElementById(id);
+    if(!sel) return;
+    const current = sel.value;
+    sel.innerHTML = '<option value="">ทั้งหมด</option>' +
+      uniqueValues('SFT2026',key).map(v=>`<option value="${escapeHtml(v)}">${escapeHtml(v)}</option>`).join('');
+    sel.value = current;
+  });
+}
+
+function getSftDashFilters(){
+  return {
+    fy: document.getElementById('sft_f_fy')?.value || '',
+    month: document.getElementById('sft_f_month')?.value || '',
+    district: document.getElementById('sft_f_district')?.value || '',
+    dx: document.getElementById('sft_f_dx')?.value || '',
+    med: document.getElementById('sft_f_med')?.value || '',
+    status: document.getElementById('sft_f_status')?.value || '',
+  };
+}
+
+function applySftDashFilters(rows, f){
+  return rows.filter(r=>{
+    if(f.fy && String(fiscalYearOf(r.c2)) !== f.fy) return false;
+    if(f.month && String(monthOf(r.c2)) !== f.month) return false;
+    if(f.district && r.c6 !== f.district) return false;
+    if(f.dx && r.c8 !== f.dx) return false;
+    if(f.med && r.c9 !== f.med) return false;
+    if(f.status && r.c11 !== f.status) return false;
+    return true;
+  });
+}
+
+/* ===================== Patient2026 DASHBOARD FILTERS ===================== */
+// "ได้ยา" อ้างอิงคอลัมน์ c15 (เหตุผลที่ไม่ได้ยา) ซึ่งมีค่า 'rt-PA' เป็นหนึ่งในตัวเลือกด้วย
+// "สถานะ" อ้างอิงคอลัมน์ c19 (สถานะจำหน่าย) เนื่องจาก Patient2026 ไม่มีคอลัมน์ "สถานะ" แยกต่างหาก
+function populatePatientDashFilters(){
+  const fySel = document.getElementById('patient_f_fy');
+  if(!fySel) return;
+
+  const fySet = new Set();
+  (STATE.data.Patient2026?.rows || []).forEach(r=>{ const fy = fiscalYearOf(r.c2); if(fy) fySet.add(fy); });
+  const fyCurrent = fySel.value;
+  fySel.innerHTML = '<option value="">ทั้งหมด</option>' +
+    [...fySet].sort((a,b)=>b-a).map(fy=>`<option value="${fy}">${fy}</option>`).join('');
+  fySel.value = fyCurrent;
+
+  const monthSel = document.getElementById('patient_f_month');
+  if(!monthSel.dataset.built){
+    monthSel.innerHTML = '<option value="">ทั้งหมด</option>' +
+      MOPH_MONTHS.map(m=>`<option value="${m.v}">${m.l}</option>`).join('');
+    monthSel.dataset.built = '1';
+  }
+
+  const selectMap = { patient_f_district:'c5', patient_f_dx:'c13', patient_f_med:'c15', patient_f_status:'c19' };
+  Object.entries(selectMap).forEach(([id,key])=>{
+    const sel = document.getElementById(id);
+    if(!sel) return;
+    const current = sel.value;
+    sel.innerHTML = '<option value="">ทั้งหมด</option>' +
+      uniqueValues('Patient2026',key).map(v=>`<option value="${escapeHtml(v)}">${escapeHtml(v)}</option>`).join('');
+    sel.value = current;
+  });
+}
+
+function getPatientDashFilters(){
+  return {
+    fy: document.getElementById('patient_f_fy')?.value || '',
+    month: document.getElementById('patient_f_month')?.value || '',
+    district: document.getElementById('patient_f_district')?.value || '',
+    dx: document.getElementById('patient_f_dx')?.value || '',
+    med: document.getElementById('patient_f_med')?.value || '',
+    status: document.getElementById('patient_f_status')?.value || '',
+  };
+}
+
+function applyPatientDashFilters(rows, f){
+  return rows.filter(r=>{
+    if(f.fy && String(fiscalYearOf(r.c2)) !== f.fy) return false;
+    if(f.month && String(monthOf(r.c2)) !== f.month) return false;
+    if(f.district && r.c5 !== f.district) return false;
+    if(f.dx && r.c13 !== f.dx) return false;
+    if(f.med && r.c15 !== f.med) return false;
+    if(f.status && r.c19 !== f.status) return false;
+    return true;
+  });
+}
+
+/* ===================== HHC2026 DASHBOARD FILTERS ===================== */
+function populateHhcDashFilters(){
+  const fySel = document.getElementById('hhc_f_fy');
+  if(!fySel) return;
+
+  const fySet = new Set();
+  (STATE.data.HHC2026?.rows || []).forEach(r=>{ const fy = fiscalYearOf(r.c7); if(fy) fySet.add(fy); });
+  const fyCurrent = fySel.value;
+  fySel.innerHTML = '<option value="">ทั้งหมด</option>' +
+    [...fySet].sort((a,b)=>b-a).map(fy=>`<option value="${fy}">${fy}</option>`).join('');
+  fySel.value = fyCurrent;
+
+  const monthSel = document.getElementById('hhc_f_month');
+  if(!monthSel.dataset.built){
+    monthSel.innerHTML = '<option value="">ทั้งหมด</option>' +
+      MOPH_MONTHS.map(m=>`<option value="${m.v}">${m.l}</option>`).join('');
+    monthSel.dataset.built = '1';
+  }
+
+  const selectMap = { hhc_f_district:'c5', hhc_f_dx:'c4' };
+  Object.entries(selectMap).forEach(([id,key])=>{
+    const sel = document.getElementById(id);
+    if(!sel) return;
+    const current = sel.value;
+    sel.innerHTML = '<option value="">ทั้งหมด</option>' +
+      uniqueValues('HHC2026',key).map(v=>`<option value="${escapeHtml(v)}">${escapeHtml(v)}</option>`).join('');
+    sel.value = current;
+  });
+}
+
+function getHhcDashFilters(){
+  return {
+    fy: document.getElementById('hhc_f_fy')?.value || '',
+    month: document.getElementById('hhc_f_month')?.value || '',
+    district: document.getElementById('hhc_f_district')?.value || '',
+    dx: document.getElementById('hhc_f_dx')?.value || '',
+  };
+}
+
+function applyHhcDashFilters(rows, f){
+  return rows.filter(r=>{
+    if(f.fy && String(fiscalYearOf(r.c7)) !== f.fy) return false;
+    if(f.month && String(monthOf(r.c7)) !== f.month) return false;
+    if(f.district && r.c5 !== f.district) return false;
+    if(f.dx && r.c4 !== f.dx) return false;
+    return true;
+  });
+}
+
+/* ===================== TABLE RENDER ===================== */
+function getFiltered(sheet){
+  const rows = STATE.data[sheet]?.rows || [];
+  const q = document.getElementById(sheet+'_search').value.trim();
+  const filterKeys = {
+    Patient2026: ['c5','c13','c14','c19'],
+    SFT2026: ['c6','c9','c11'],
+    HHC2026: ['c5','c27'],
+  }[sheet];
+  const active = {};
+  filterKeys.forEach(k=>{
+    const sel = document.getElementById(sheet+'_f_'+k);
+    if(sel && sel.value) active[k] = sel.value;
+  });
+  return rows.filter(r=>{
+    if(!rowMatchesSearch(sheet,r,q)) return false;
+    for(const k in active){ if(r[k] !== active[k]) return false; }
+    return true;
+  });
+}
+
+function renderTable(sheet){
+  const all = getFiltered(sheet);
+  const cols = SUMMARY[sheet];
+  const thead = document.getElementById(sheet+'_thead');
+  thead.innerHTML = cols.map(k=>`<th>${fieldByKey(sheet,k).l}</th>`).join('') + '<th>จัดการ</th>';
+
+  const pageSize = STATE.pageSize;
+  const totalPages = Math.max(1, Math.ceil(all.length / pageSize));
+  if(STATE.page[sheet] > totalPages) STATE.page[sheet] = totalPages;
+  const page = STATE.page[sheet];
+  const start = (page-1)*pageSize;
+  const pageRows = all.slice(start, start+pageSize);
+
+  const tbody = document.getElementById(sheet+'_tbody');
+  if(pageRows.length === 0){
+    tbody.innerHTML = `<tr><td colspan="${cols.length+1}" class="empty">ไม่พบข้อมูล</td></tr>`;
+  } else {
+    tbody.innerHTML = pageRows.map(r=>{
+      const tds = cols.map(k=>`<td>${escapeHtml(displayVal(sheet,k,r[k]))}</td>`).join('');
+      return `<tr>${tds}<td><div class="row-actions">
+        <button class="icon-btn" onclick="openEdit('${sheet}',${r._row})">แก้ไข</button>
+        <button class="icon-btn" onclick="confirmDelete('${sheet}',${r._row})">ลบ</button>
+      </div></td></tr>`;
+    }).join('');
+  }
+  document.getElementById(sheet+'_count').textContent = `พบ ${all.length.toLocaleString()} รายการ`;
+
+  const pager = document.getElementById(sheet+'_pager');
+  pager.innerHTML = `
+    <button class="btn ghost" ${page<=1?'disabled':''} onclick="gotoPage('${sheet}',${page-1})">‹ ก่อนหน้า</button>
+    <span class="muted">หน้า ${page} / ${totalPages}</span>
+    <button class="btn ghost" ${page>=totalPages?'disabled':''} onclick="gotoPage('${sheet}',${page+1})">ถัดไป ›</button>`;
+}
+function gotoPage(sheet,p){ STATE.page[sheet]=p; renderTable(sheet); }
+function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+/* ===================== FORM / MODAL ===================== */
+function openAdd(sheet){
+  STATE.editing = { sheet, row:null };
+  buildForm(sheet, {});
+  document.getElementById('modalTitle').textContent = 'เพิ่มข้อมูล — ' + SHEET_TITLES[sheet];
+  document.getElementById('modalOverlay').classList.add('open');
+}
+function openEdit(sheet, rowNum){
+  const row = STATE.data[sheet].rows.find(r=>r._row===rowNum);
+  if(!row){ toast('ไม่พบข้อมูลแถวนี้ ลองรีเฟรช', true); return; }
+  STATE.editing = { sheet, row: rowNum };
+  buildForm(sheet, row);
+  document.getElementById('modalTitle').textContent = 'แก้ไขข้อมูล — ' + SHEET_TITLES[sheet];
+  document.getElementById('modalOverlay').classList.add('open');
+}
+function closeModal(){ document.getElementById('modalOverlay').classList.remove('open'); STATE.editing = null; }
+
+function buildForm(sheet, row){
+  const groups = [];
+  FIELDS[sheet].forEach(f=>{
+    let grp = groups.find(g=>g.name===f.g);
+    if(!grp){ grp = {name:f.g, fields:[]}; groups.push(grp); }
+    grp.fields.push(f);
+  });
+  const html = groups.map(g=>`
+    <fieldset><legend>${g.name}</legend><div class="field-grid">
+      ${g.fields.map(f=>renderField(sheet,f,row[f.k])).join('')}
+    </div></fieldset>
+  `).join('');
+  document.getElementById('modalBody').innerHTML = html;
+}
+
+function renderField(sheet,f,val){
+  val = val ?? '';
+  const id = 'fld_'+f.k;
+  const wide = (f.t === 'textarea') ? ' wide' : '';
+  let input = '';
+  if(f.t === 'select'){
+    let opts = f.o.slice();
+    if(val && !opts.includes(val)) opts.push(val);
+    input = `<select id="${id}" ${f.ro?'disabled':''}><option value=""></option>${opts.map(o=>`<option value="${escapeHtml(o)}" ${o===val?'selected':''}>${escapeHtml(o)}</option>`).join('')}</select>`;
+  } else if(f.t === 'textarea'){
+    input = `<textarea id="${id}">${escapeHtml(val)}</textarea>`;
+  } else if(f.t === 'date'){
+    input = `<input type="date" id="${id}" value="${escapeHtml(val)}">`;
+  } else if(f.t === 'number'){
+    input = `<input type="number" step="any" id="${id}" value="${escapeHtml(val)}" ${f.ro?'readonly':''}>`;
+  } else {
+    const dlid = id+'_dl';
+    const dl = f.o ? `<datalist id="${dlid}">${f.o.map(o=>`<option value="${escapeHtml(o)}">`).join('')}</datalist>` : '';
+    input = `<input type="text" id="${id}" value="${escapeHtml(val)}" ${f.o?`list="${dlid}"`:''}>${dl}`;
+  }
+  return `<div class="field${wide}"><label for="${id}">${f.l}</label>${input}</div>`;
+}
+
+function collectForm(sheet){
+  const data = {};
+  FIELDS[sheet].forEach(f=>{
+    if(f.ro) return;
+    const el = document.getElementById('fld_'+f.k);
+    if(!el) return;
+    data[f.k] = el.value;
+  });
+  return data;
+}
+
+async function saveModal(){
+  const { sheet, row } = STATE.editing;
+  const data = collectForm(sheet);
+  const btn = document.getElementById('modalSave');
+  btn.disabled = true; btn.textContent = 'กำลังบันทึก...';
+  try{
+    const payload = row ? { action:'update', sheet, row, data } : { action:'create', sheet, data };
+    const res = await apiPost(payload);
+    if(res.status !== 'ok') throw new Error(res.message || 'save error');
+    toast('บันทึกข้อมูลสำเร็จ');
+    closeModal();
+    await loadAll();
+  }catch(err){
+    toast('บันทึกไม่สำเร็จ: ' + err.message, true);
+  }finally{
+    btn.disabled = false; btn.textContent = 'บันทึก';
+  }
+}
+
+async function confirmDelete(sheet,row){
+  if(!confirm('ยืนยันการลบข้อมูลแถวนี้? การลบจะไม่สามารถกู้คืนได้')) return;
+  try{
+    const res = await apiPost({ action:'delete', sheet, row });
+    if(res.status !== 'ok') throw new Error(res.message || 'delete error');
+    toast('ลบข้อมูลสำเร็จ');
+    await loadAll();
+  }catch(err){
+    toast('ลบไม่สำเร็จ: ' + err.message, true);
+  }
+}
+
+/* ===================== DASHBOARD ===================== */
+let CHART_INSTANCES = [];
+function destroyCharts(){ CHART_INSTANCES.forEach(c=>c.destroy()); CHART_INSTANCES = []; }
+let SFT_CHART_INSTANCES = [];
+function destroySftCharts(){ SFT_CHART_INSTANCES.forEach(c=>c.destroy()); SFT_CHART_INSTANCES = []; }
+let PATIENT_CHART_INSTANCES = [];
+function destroyPatientCharts(){ PATIENT_CHART_INSTANCES.forEach(c=>c.destroy()); PATIENT_CHART_INSTANCES = []; }
+let HHC_CHART_INSTANCES = [];
+function destroyHhcCharts(){ HHC_CHART_INSTANCES.forEach(c=>c.destroy()); HHC_CHART_INSTANCES = []; }
+
+const valueLabelsPlugin = {
+  id:'valueLabels',
+  afterDatasetsDraw(chart, args, options){
+    options = options || {};
+    const {ctx, chartArea} = chart;
+    const kind = chart.config.type;
+    const horizontal = chart.options.indexAxis === 'y';
+    ctx.save();
+    ctx.font = `600 ${options.fontSize || 10}px "Prompt", "Noto Sans Thai", sans-serif`;
+    ctx.textBaseline = 'middle';
+    chart.data.datasets.forEach((dataset, datasetIndex)=>{
+      const meta = chart.getDatasetMeta(datasetIndex);
+      if(meta.hidden) return;
+      const total = options.showPercent ? dataset.data.reduce((a,b)=>a+(Number(b)||0),0) : 0;
+      meta.data.forEach((element, index)=>{
+        const number = Number(dataset.data[index]);
+        if(!Number.isFinite(number)) return;
+        if(options.skipZero && number === 0) return;
+        let text = number.toLocaleString('th-TH', {maximumFractionDigits:1});
+        if(options.showPercent && total>0) text += ` (${(number/total*100).toFixed(1)}%)`;
+        let x, y;
+        if(kind === 'doughnut' || kind === 'pie'){
+          const pos = element.tooltipPosition();
+          x = pos.x; y = pos.y;
+          ctx.textAlign = 'center';
+          ctx.lineWidth = 3;
+          ctx.strokeStyle = 'rgba(31,53,44,.25)';
+          ctx.fillStyle = '#ffffff';
+          ctx.strokeText(text, x, y);
+          ctx.fillText(text, x, y);
+        } else if(kind === 'bar' && horizontal){
+          const width = ctx.measureText(text).width;
+          x = element.x + 7; y = element.y;
+          ctx.textAlign = 'left';
+          const inside = x + width > chartArea.right;
+          if(inside){ x = element.x - 7; ctx.textAlign = 'right'; }
+          ctx.fillStyle = inside ? '#ffffff' : (options.color || cssVar('--text-secondary'));
+          ctx.fillText(text, x, y);
+        } else {
+          x = element.x; y = element.y - 10;
+          const inside = kind === 'bar' && y < chartArea.top + 5;
+          if(y < chartArea.top + 5) y = element.y + 12;
+          ctx.textAlign = 'center';
+          ctx.fillStyle = inside ? '#ffffff' : (options.color || cssVar('--text-secondary'));
+          ctx.fillText(text, x, y);
+        }
+      });
+    });
+    ctx.restore();
+  }
+};
+if(typeof Chart !== 'undefined'){
+  Chart.register(valueLabelsPlugin);
+  Chart.defaults.font.family = '"Prompt", "Noto Sans Thai", sans-serif';
+  Chart.defaults.animation.duration = 650;
+}
+
+function avg(nums){ const v = nums.filter(n=>n!==''&&n!==null&&!isNaN(n)).map(Number); return v.length ? v.reduce((a,b)=>a+b,0)/v.length : 0; }
+function sum(nums){ const v = nums.filter(n=>n!==''&&n!==null&&!isNaN(n)).map(Number); return v.length ? v.reduce((a,b)=>a+b,0) : 0; }
+
+function renderDashboard(){
+  const f = getDashboardFilters();
+  const P = applyDashboardFilters('Patient2026', STATE.data.Patient2026.rows, f);
+  const S = applyDashboardFilters('SFT2026', STATE.data.SFT2026.rows, f);
+  const H = applyDashboardFilters('HHC2026', STATE.data.HHC2026.rows, f);
+
+  const totalPatients = P.length;
+  const dead = P.filter(r=>r.c19==='ตาย').length;
+  const avgStay = avg(P.map(r=>r.c21));
+  const rtpaGiven = S.filter(r=>String(r.c9||'').indexOf('rt-PA')===0).length;
+  const rtpaRate = S.length ? (rtpaGiven/S.length*100) : 0;
+
+  document.getElementById('kpiRow').innerHTML = `
+    ${kpiCard('ผู้ป่วย Stroke ทั้งหมด', totalPatients.toLocaleString(), 'Patient2026', 'green', 'patient')}
+    ${kpiCard('อัตราได้ยา rt-PA (SFT)', rtpaRate.toFixed(1)+'%', rtpaGiven+' / '+S.length+' ราย', 'purple', 'medicine')}
+    ${kpiCard('วันนอนเฉลี่ย', avgStay.toFixed(1)+' วัน', 'Patient2026', 'cyan', 'bed')}
+    ${kpiCard('เสียชีวิตระหว่างนอน', dead.toLocaleString()+' ราย', totalPatients?((dead/totalPatients*100).toFixed(1)+'% ของผู้ป่วยทั้งหมด'):'', 'red', 'heart')}
+    ${kpiCard('รายการ SFT ทั้งหมด', S.length.toLocaleString(), 'SFT2026', 'orange', 'fasttrack')}
+    ${kpiCard('ติดตามเยี่ยมบ้าน (HHC)', H.length.toLocaleString(), 'HHC2026', 'indigo', 'home')}
+  `;
+
+  destroyCharts();
+  const grid = document.getElementById('chartGrid');
+  grid.innerHTML = `
+    <div class="chart-card"><div class="chart-card-head"><div><h3>สัดส่วนการวินิจฉัย (Diagnosis)</h3><div class="hint">Patient2026 · c13</div></div></div><canvas id="chDx"></canvas></div>
+    <div class="chart-card"><div class="chart-card-head"><div><h3>สถานะจำหน่าย</h3><div class="hint">Patient2026 · c19</div></div></div><canvas id="chDc"></canvas></div>
+    <div class="chart-card wide"><div class="chart-card-head"><div><h3>แนวโน้มจำนวนผู้ป่วยรายเดือน</h3><div class="hint">Patient2026 · วันที่รับผู้ป่วย</div></div></div><canvas id="chTrend"></canvas></div>
+    <div class="chart-card"><div class="chart-card-head"><div><h3>ผู้ป่วยแยกตามอำเภอ</h3><div class="hint">Patient2026 · c5</div></div></div><canvas id="chDistrict"></canvas></div>
+    <div class="chart-card"><div class="chart-card-head"><div><h3>NIHSS เฉลี่ย ก่อน–หลัง</h3><div class="hint">ยิ่งต่ำยิ่งดี</div></div></div><canvas id="chNihss"></canvas></div>
+    <div class="chart-card"><div class="chart-card-head"><div><h3>ADL เฉลี่ย ก่อน–หลัง</h3><div class="hint">ยิ่งสูงยิ่งดี</div></div></div><canvas id="chAdl"></canvas></div>
+    <div class="chart-card"><div class="chart-card-head"><div><h3>MRS เฉลี่ย ก่อน–หลัง</h3><div class="hint">ยิ่งต่ำยิ่งดี</div></div></div><canvas id="chMrs"></canvas></div>
+    <div class="chart-card"><div class="chart-card-head"><div><h3>SFT: เหตุผลที่ไม่ได้ยา rt-PA</h3><div class="hint">SFT2026 · c10</div></div></div><canvas id="chSftReason"></canvas></div>
+    <div class="chart-card"><div class="chart-card-head"><div><h3>ผลการเยี่ยมบ้าน (HHC)</h3><div class="hint">HHC2026 · c27</div></div></div><canvas id="chHhc"></canvas></div>
+  `;
+
+  chartCategorical('chDx', P, 'c13', ['Ischemic','Hemorrhage','TIA','Non Stroke','Bell Palsy','Delirium','Dizzeness'], 'doughnut');
+  chartCategorical('chDc', P, 'c19', ['กลับบ้าน','Refer for MT','Refer รพช','Refer สุโขทัย','referสุโขทัย','ตาย','ย้ายออก','ไม่สมัครอยู่'], 'bar');
+  chartTrend('chTrend', P, 'c2');
+  chartCategorical('chDistrict', P, 'c5', ['สวรรคโลก','ศรีสำโรง','ศรีสัชนาลัย','ศรีนคร','ทุ่งเสลี่ยม','นอกเขตในจังหวัด','นอกดขตต่างจังหวัด'], 'bar');
+  chartBeforeAfter('chNihss', avg(P.map(r=>r.c37)), avg(P.map(r=>r.c38)));
+  chartBeforeAfter('chAdl', avg(P.map(r=>r.c40)), avg(P.map(r=>r.c41)));
+  chartBeforeAfter('chMrs', avg(P.map(r=>r.c42)), avg(P.map(r=>r.c43)));
+  chartCategorical('chSftReason', S, 'c10', null, 'bar');
+  chartCategorical('chHhc', H, 'c27', ['ดีขึ้น','เท่าเดิม','แย่ลง','referกลับ','refer รพ.ศูนย์','dead'], 'doughnut');
+}
+
+/* ===================== SFT2026 DASHBOARD ===================== */
+function renderSftDashboard(){
+  const f = getSftDashFilters();
+  const rows = applySftDashFilters(STATE.data.SFT2026.rows, f);
+
+  const total = rows.length;
+  const ischemicTotal = rows.filter(r=>r.c8==='Ischemic').length;
+  const ischemicRtpa = rows.filter(r=>r.c8==='Ischemic' && String(r.c9||'').indexOf('rt-PA')===0).length;
+
+  document.getElementById('sftKpiRow').innerHTML = `
+    ${kpiCard('จำนวนผู้ป่วยทั้งหมด', total.toLocaleString(), 'Stroke Fast Track', 'orange', 'fasttrack')}
+    ${kpiCard('จำนวน Ischemic ทั้งหมด', ischemicTotal.toLocaleString(), total?((ischemicTotal/total*100).toFixed(1)+'% ของผู้ป่วยทั้งหมด'):'', 'purple', 'medicine')}
+    ${kpiCard('Ischemic ที่ได้ rt-PA', ischemicRtpa.toLocaleString(), ischemicTotal?((ischemicRtpa/ischemicTotal*100).toFixed(1)+'% ของ Ischemic'):'', 'green', 'medicine')}
+  `;
+
+  destroySftCharts();
+  const grid = document.getElementById('sftChartGrid');
+  grid.innerHTML = `
+    <div class="chart-card"><div class="chart-card-head"><div><h3>มาโดย</h3><div class="hint">SFT2026 · c5</div></div></div><canvas id="sftChMode"></canvas></div>
+    <div class="chart-card"><div class="chart-card-head"><div><h3>อำเภอ</h3><div class="hint">SFT2026 · c6</div></div></div><canvas id="sftChDistrict"></canvas></div>
+    <div class="chart-card wide"><div class="chart-card-head"><div><h3>ตำบล</h3><div class="hint">SFT2026 · c7</div></div></div><canvas id="sftChSubdistrict"></canvas></div>
+    <div class="chart-card"><div class="chart-card-head"><div><h3>Diagnosis</h3><div class="hint">SFT2026 · c8</div></div></div><canvas id="sftChDx"></canvas></div>
+    <div class="chart-card"><div class="chart-card-head"><div><h3>การได้รับยา (ราย)</h3><div class="hint">SFT2026 · c9</div></div></div><canvas id="sftChMed"></canvas></div>
+    <div class="chart-card wide"><div class="chart-card-head"><div><h3>เหตุผลที่ไม่ได้ยา</h3><div class="hint">SFT2026 · c10</div></div></div><canvas id="sftChReason"></canvas></div>
+    <div class="chart-card"><div class="chart-card-head"><div><h3>สถานะ</h3><div class="hint">SFT2026 · c11</div></div></div><canvas id="sftChStatus"></canvas></div>
+    <div class="chart-card wide"><div class="chart-card-head"><div><h3>พยาบาลผู้รับผิดชอบ</h3><div class="hint">SFT2026 · c12</div></div></div><canvas id="sftChNurse"></canvas></div>
+  `;
+
+  chartCategorical('sftChMode', rows, 'c5', fieldByKey('SFT2026','c5').o, 'bar', SFT_CHART_INSTANCES);
+  chartCategorical('sftChDistrict', rows, 'c6', fieldByKey('SFT2026','c6').o, 'bar', SFT_CHART_INSTANCES);
+  chartCategorical('sftChSubdistrict', rows, 'c7', fieldByKey('SFT2026','c7').o, 'bar', SFT_CHART_INSTANCES, 100);
+  chartCategorical('sftChDx', rows, 'c8', fieldByKey('SFT2026','c8').o, 'doughnut', SFT_CHART_INSTANCES);
+  chartCategorical('sftChMed', rows, 'c9', fieldByKey('SFT2026','c9').o, 'bar', SFT_CHART_INSTANCES);
+  chartCategorical('sftChReason', rows, 'c10', fieldByKey('SFT2026','c10').o, 'bar', SFT_CHART_INSTANCES, 100);
+  chartCategorical('sftChStatus', rows, 'c11', fieldByKey('SFT2026','c11').o, 'doughnut', SFT_CHART_INSTANCES);
+  chartCategorical('sftChNurse', rows, 'c12', null, 'bar', SFT_CHART_INSTANCES, 100);
+}
+
+/* ===================== Patient2026 DASHBOARD ===================== */
+function renderPatientDashboard(){
+  const f = getPatientDashFilters();
+  const rows = applyPatientDashFilters(STATE.data.Patient2026.rows, f);
+
+  const total = rows.length;
+  const ischemicTotal = rows.filter(r=>r.c13==='Ischemic').length;
+  const rtpaCount = rows.filter(r=>r.c15==='rt-PA').length;
+  const stayDaysSum = sum(rows.map(r=>r.c21));
+  const etCount = rows.filter(r=>r.c27==='On ET-tube').length;
+  const etDaysSum = sum(rows.map(r=>r.c28));
+  const fcCount = rows.filter(r=>r.c30==="ใส่ F/C").length;
+  const foleyDaysSum = sum(rows.map(r=>r.c31));
+
+  document.getElementById('patientKpiRow').innerHTML = `
+    ${kpiCard('จำนวนผู้ป่วยทั้งหมด', total.toLocaleString(), 'ผู้ป่วย Stroke', 'green', 'patient')}
+    ${kpiCard('จำนวน Ischemic ทั้งหมด', ischemicTotal.toLocaleString(), total?((ischemicTotal/total*100).toFixed(1)+'% ของผู้ป่วยทั้งหมด'):'', 'purple', 'medicine')}
+    ${kpiCard('ได้ยา rt-PA', rtpaCount.toLocaleString()+' ราย', 'นับจากคอลัมน์เหตุผลที่ไม่ได้ยา = rt-PA', 'cyan', 'medicine')}
+    ${kpiCard('วันนอนรวมทั้งหมด', stayDaysSum.toLocaleString()+' วัน', 'ผลรวมวันนอนทุกราย', 'orange', 'bed')}
+    ${kpiCard('จำนวน On ET-tube', etCount.toLocaleString()+' ราย', 'นับจำนวนผู้ป่วย', 'red', 'tube')}
+    ${kpiCard('วันใส่ ET รวม', etDaysSum.toLocaleString()+' วัน', 'ผลรวมวันใส่ ET ทุกราย', 'indigo', 'tube')}
+    ${kpiCard('จำนวนใส่ F/C', fcCount.toLocaleString()+' ราย', 'นับจำนวนผู้ป่วย', 'green', 'catheter')}
+    ${kpiCard("วันใส่ Foley' รวม", foleyDaysSum.toLocaleString()+' วัน', 'ผลรวมวันใส่ Foley ทุกราย', 'purple', 'catheter')}
+  `;
+
+  destroyPatientCharts();
+  const grid = document.getElementById('patientChartGrid');
+  grid.innerHTML = `
+    <div class="chart-card"><div class="chart-card-head"><div><h3>มาโดย</h3><div class="hint">Patient2026 · c4</div></div></div><canvas id="patChMode"></canvas></div>
+    <div class="chart-card"><div class="chart-card-head"><div><h3>อำเภอ</h3><div class="hint">Patient2026 · c5</div></div></div><canvas id="patChDistrict"></canvas></div>
+    <div class="chart-card wide"><div class="chart-card-head"><div><h3>ตำบล</h3><div class="hint">Patient2026 · c6</div></div></div><canvas id="patChSubdistrict"></canvas></div>
+    <div class="chart-card"><div class="chart-card-head"><div><h3>Diagnosis</h3><div class="hint">Patient2026 · c13</div></div></div><canvas id="patChDx"></canvas></div>
+    <div class="chart-card wide"><div class="chart-card-head"><div><h3>มา รพ.ช้ากว่า 4 ชม.</h3><div class="hint">Patient2026 · c16</div></div></div><canvas id="patChLate4h"></canvas></div>
+    <div class="chart-card"><div class="chart-card-head"><div><h3>สถานะจำหน่าย</h3><div class="hint">Patient2026 · c19</div></div></div><canvas id="patChDischarge"></canvas></div>
+  `;
+
+  chartCategorical('patChMode', rows, 'c4', fieldByKey('Patient2026','c4').o, 'bar', PATIENT_CHART_INSTANCES);
+  chartCategorical('patChDistrict', rows, 'c5', fieldByKey('Patient2026','c5').o, 'bar', PATIENT_CHART_INSTANCES);
+  chartCategorical('patChSubdistrict', rows, 'c6', fieldByKey('Patient2026','c6').o, 'bar', PATIENT_CHART_INSTANCES, 100);
+  chartCategorical('patChDx', rows, 'c13', fieldByKey('Patient2026','c13').o, 'doughnut', PATIENT_CHART_INSTANCES);
+  chartCategorical('patChLate4h', rows, 'c16', fieldByKey('Patient2026','c16').o, 'bar', PATIENT_CHART_INSTANCES, 100);
+  chartCategorical('patChDischarge', rows, 'c19', fieldByKey('Patient2026','c19').o, 'bar', PATIENT_CHART_INSTANCES);
+}
+
+/* ===================== HHC2026 DASHBOARD ===================== */
+function renderHhcDashboard(){
+  const f = getHhcDashFilters();
+  const rows = applyHhcDashFilters(STATE.data.HHC2026.rows, f);
+
+  const total = rows.length;
+
+  document.getElementById('hhcKpiRow').innerHTML = `
+    ${kpiCard('จำนวนผู้ป่วยทั้งหมด', total.toLocaleString(), 'เยี่ยมบ้าน (HHC)', 'indigo', 'home')}
+  `;
+
+  destroyHhcCharts();
+  const grid = document.getElementById('hhcChartGrid');
+  grid.innerHTML = `
+    <div class="chart-card"><div class="chart-card-head"><div><h3>Diagnosis</h3><div class="hint">HHC2026 · c4</div></div></div><canvas id="hhcChDx"></canvas></div>
+    <div class="chart-card"><div class="chart-card-head"><div><h3>อำเภอ</h3><div class="hint">HHC2026 · c5</div></div></div><canvas id="hhcChDistrict"></canvas></div>
+    <div class="chart-card wide grouped-chart"><div class="chart-card-head"><div><h3>BI จำหน่าย / 3 เดือน / 6 เดือน</h3><div class="hint">HHC2026 · c11 / c13 / c15</div></div></div><canvas id="hhcChBiCombined"></canvas></div>
+    <div class="chart-card wide grouped-chart"><div class="chart-card-head"><div><h3>MRS จำหน่าย / 3 เดือน / 6 เดือน</h3><div class="hint">HHC2026 · c22 / c24 / c26</div></div></div><canvas id="hhcChMrsCombined"></canvas></div>
+    <div class="chart-card"><div class="chart-card-head"><div><h3>NIHSS จำหน่าย (แนวโน้ม)</h3><div class="hint">HHC2026 · c19</div></div></div><canvas id="hhcChNihss"></canvas></div>
+  `;
+
+  chartCategorical('hhcChDx', rows, 'c4', fieldByKey('HHC2026','c4').o, 'doughnut', HHC_CHART_INSTANCES, 8, true);
+  chartCategorical('hhcChDistrict', rows, 'c5', fieldByKey('HHC2026','c5').o, 'bar', HHC_CHART_INSTANCES, 8, true);
+  chartGroupedCategorical('hhcChBiCombined', rows, [
+    {key:'c11', label:'BI จำหน่าย'}, {key:'c13', label:'BI 3 เดือน'}, {key:'c15', label:'BI 6 เดือน'}
+  ], HHC_CHART_INSTANCES, true);
+  chartGroupedCategorical('hhcChMrsCombined', rows, [
+    {key:'c22', label:'MRS จำหน่าย'}, {key:'c24', label:'MRS 3 เดือน'}, {key:'c26', label:'MRS 6 เดือน'}
+  ], HHC_CHART_INSTANCES, true);
+  chartCategorical('hhcChNihss', rows, 'c19', fieldByKey('HHC2026','c19').o, 'bar', HHC_CHART_INSTANCES, 8, true);
+}
+
+function kpiCard(label,value,sub,tone,icon){
+  const icons = {
+    patient:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="7.5" r="3.2"/><path d="M5.5 20c.5-4.2 2.8-6.4 6.5-6.4s6 2.2 6.5 6.4"/><path d="M18.2 5v4M16.2 7h4"/></svg>',
+    medicine:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m14 4 6 6M12.8 5.2l6 6-8.3 8.3a3.5 3.5 0 0 1-5-5l7.3-9.3Z"/><path d="m8.2 10 6 6"/></svg>',
+    bed:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 19V7M21 19v-6a3 3 0 0 0-3-3H9v7M3 14h18M6 10h3"/></svg>',
+    heart:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 8.3C20 4.4 15.1 3.1 12 6.5 8.9 3.1 4 4.4 3.4 8.3c-.7 4.8 4 8.7 8.6 11.3 4.6-2.6 9.3-6.5 8.6-11.3Z"/><path d="M6.5 12h3l1.4-3 2.2 6 1.4-3H18"/></svg>',
+    fasttrack:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 16V8h11v8M14 11h3l4 4v1h-2M7 16h8"/><circle cx="5" cy="18" r="2"/><circle cx="17" cy="18" r="2"/><path d="M8 10v4M6 12h4"/></svg>',
+    home:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 9-7 9 7M5 10v10h14V10M9 20v-6h6v6"/></svg>',
+    tube:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h9.5a3.5 3.5 0 1 0 0-7H12"/><path d="M4 8.5v7"/></svg>',
+    catheter:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6.5" cy="5" r="2"/><path d="M6.5 7v3a4 4 0 0 0 4 4h1a3 3 0 0 1 3 3v3"/></svg>'
+  };
+  return `<div class="kpi kpi-${tone}"><div class="kpi-top"><div class="kpi-icon" aria-hidden="true">${icons[icon]||icons.patient}</div><div class="label">${label}</div></div><div class="value">${value}</div><div class="sub">${sub||''}</div></div>`;
+}
+
+function countBy(rows,key){
+  const m = {};
+  rows.forEach(r=>{ const v = r[key]; if(v==='' || v==null) return; m[v]=(m[v]||0)+1; });
+  return m;
+}
+
+function chartCategorical(canvasId, rows, key, order, kind, store, limit, showPercent){
+  store = store || CHART_INSTANCES;
+  const counts = countBy(rows,key);
+  let labels = order ? order.filter(l=>counts[l]) : Object.keys(counts).sort((a,b)=>counts[b]-counts[a]);
+  if(!order) labels = labels.slice(0, limit || 8);
+  const values = labels.map(l=>counts[l]);
+  const total = values.reduce((a,b)=>a+b,0);
+  const colors = labels.map((_,i)=>slotColor(i));
+  const ctx = document.getElementById(canvasId);
+  const textColor = cssVar('--text-secondary');
+  const gridColor = cssVar('--grid');
+  const cfg = {
+    type: kind,
+    data:{ labels, datasets:[{ data: values, backgroundColor: colors, borderWidth: kind==='doughnut'?3:0,
+      borderColor: cssVar('--card'), borderRadius: kind==='bar'?8:0, maxBarThickness:34 }]},
+    options:{
+      responsive:true, maintainAspectRatio:true,
+      layout:{padding:{top:18,right:(kind==='bar' && labels.length>5)?38:10}},
+      plugins:{ valueLabels:{color:textColor,fontSize:10,showPercent:!!showPercent},
+        legend:{ display: kind==='doughnut', position:'bottom', labels:{color:textColor,boxWidth:10,usePointStyle:true,pointStyle:'circle',padding:14,font:{size:10}} },
+        tooltip:{backgroundColor:'#17352a',titleFont:{family:'Prompt',size:11},bodyFont:{family:'Prompt',size:11},padding:10,cornerRadius:10,
+          callbacks:{ label: c => {
+            let t = ` ${c.label}: ${c.formattedValue} ราย`;
+            if(showPercent && total>0) t += ` (${(Number(c.raw)/total*100).toFixed(1)}%)`;
+            return t;
+          } } } },
+      indexAxis: (kind==='bar' && labels.length>5) ? 'y' : 'x',
+      scales: kind==='bar' ? {
+        x:{ grid:{color:gridColor}, ticks:{color:textColor,font:{size:10}} },
+        y:{ grid:{color:gridColor}, ticks:{color:textColor,font:{size:10}} }
+      } : {}
+    }
+  };
+  store.push(new Chart(ctx, cfg));
+}
+
+function chartGroupedCategorical(canvasId, rows, series, store, showPercent){
+  store = store || CHART_INSTANCES;
+  const countMaps = series.map(s=>countBy(rows,s.key));
+  const labelSet = new Set();
+  countMaps.forEach(m=>Object.keys(m).forEach(label=>labelSet.add(label)));
+  const preferred = ['ดีขึ้น','เท่าเดิม','แย่ลง'];
+  const labels = [...labelSet].sort((a,b)=>{
+    const ai = preferred.indexOf(a), bi = preferred.indexOf(b);
+    if(ai !== -1 || bi !== -1){
+      if(ai === -1) return 1;
+      if(bi === -1) return -1;
+      return ai-bi;
+    }
+    const an = Number(a), bn = Number(b);
+    const aNumeric = Number.isFinite(an), bNumeric = Number.isFinite(bn);
+    if(aNumeric && bNumeric) return an-bn;
+    if(aNumeric !== bNumeric) return aNumeric ? -1 : 1;
+    return String(a).localeCompare(String(b),'th');
+  });
+  const datasets = series.map((s,i)=>({
+    label:s.label,
+    data:labels.map(label=>countMaps[i][label] || 0),
+    backgroundColor:slotColor(i),
+    borderRadius:7,
+    maxBarThickness:22
+  }));
+  const horizontal = labels.length > 6;
+  const textColor = cssVar('--text-secondary');
+  const gridColor = cssVar('--grid');
+  const ctx = document.getElementById(canvasId);
+  store.push(new Chart(ctx, {
+    type:'bar',
+    data:{labels,datasets},
+    options:{
+      responsive:true,
+      maintainAspectRatio:true,
+      aspectRatio:labels.length > 12 ? 1.45 : 2,
+      indexAxis:horizontal ? 'y' : 'x',
+      layout:{padding:{top:18,right:56}},
+      plugins:{
+        valueLabels:{color:textColor,fontSize:9,showPercent:!!showPercent,skipZero:true},
+        legend:{display:true,position:'top',labels:{color:textColor,boxWidth:9,usePointStyle:true,pointStyle:'circle',padding:16,font:{size:10}}},
+        tooltip:{backgroundColor:'#17352a',titleFont:{family:'Prompt',size:11},bodyFont:{family:'Prompt',size:11},padding:10,cornerRadius:10,
+          callbacks:{label:c=>{
+            const total = c.dataset.data.reduce((a,b)=>a+(Number(b)||0),0);
+            let text = ` ${c.dataset.label} · ${c.label}: ${c.formattedValue} ราย`;
+            if(showPercent && total>0) text += ` (${(Number(c.raw)/total*100).toFixed(1)}%)`;
+            return text;
+          }}}
+      },
+      scales:horizontal ? {
+        x:{beginAtZero:true,grid:{color:gridColor},ticks:{color:textColor,font:{size:10}}},
+        y:{grid:{display:false},ticks:{color:textColor,font:{size:10}}}
+      } : {
+        x:{grid:{display:false},ticks:{color:textColor,font:{size:10}}},
+        y:{beginAtZero:true,grid:{color:gridColor},ticks:{color:textColor,font:{size:10}}}
+      }
+    }
+  }));
+}
+
+function chartTrend(canvasId, rows, dateKey){
+  const m = {};
+  rows.forEach(r=>{
+    const d = r[dateKey]; if(!d) return;
+    const ym = String(d).slice(0,7);
+    m[ym] = (m[ym]||0)+1;
+  });
+  const labels = Object.keys(m).sort();
+  const values = labels.map(l=>m[l]);
+  const textColor = cssVar('--text-secondary');
+  const gridColor = cssVar('--grid');
+  CHART_INSTANCES.push(new Chart(document.getElementById(canvasId), {
+    type:'line',
+    data:{ labels, datasets:[{ data: values, borderColor: cssVar('--s1'), backgroundColor: cssVar('--s1')+'22',
+      fill:true, tension:0.35, pointRadius:4, pointHoverRadius:5, pointBackgroundColor:cssVar('--card'),pointBorderColor:cssVar('--s1'),pointBorderWidth:2,borderWidth:2 }]},
+    options:{ responsive:true, layout:{padding:{top:20,right:8}}, plugins:{ valueLabels:{color:textColor,fontSize:10},legend:{display:false},
+      tooltip:{backgroundColor:'#17352a',padding:10,cornerRadius:10,callbacks:{label:c=>` ${c.formattedValue} ราย`}} },
+      scales:{ x:{grid:{color:gridColor},ticks:{color:textColor,font:{size:10}}}, y:{beginAtZero:true,grid:{color:gridColor},ticks:{color:textColor,font:{size:10}}} } }
+  }));
+}
+
+function chartBeforeAfter(canvasId, before, after){
+  const textColor = cssVar('--text-secondary');
+  const gridColor = cssVar('--grid');
+  CHART_INSTANCES.push(new Chart(document.getElementById(canvasId), {
+    type:'bar',
+    data:{ labels:['ก่อน','หลัง'], datasets:[{ data:[Number(before.toFixed(1)), Number(after.toFixed(1))],
+      backgroundColor:[cssVar('--s1'), cssVar('--s2')], borderRadius:10, maxBarThickness:60 }]},
+    options:{ responsive:true, layout:{padding:{top:20,right:8}},plugins:{ valueLabels:{color:textColor,fontSize:10},legend:{display:false},
+      tooltip:{backgroundColor:'#17352a',padding:10,cornerRadius:10,callbacks:{label:c=>` ${c.formattedValue}`}} },
+      scales:{ x:{grid:{display:false},ticks:{color:textColor}}, y:{beginAtZero:true,grid:{color:gridColor},ticks:{color:textColor,font:{size:10}}} } }
+  }));
+}
+
+/* ===================== TABS / THEME / EVENTS ===================== */
+function switchTab(tab){
+  document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.toggle('active', b.dataset.tab===tab));
+  document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active', v.id==='view-'+tab));
+  if(tab==='dashboard') renderDashboard();
+  if(tab==='SFT2026') renderSftDashboard();
+  if(tab==='Patient2026') renderPatientDashboard();
+  if(tab==='HHC2026') renderHhcDashboard();
+}
+
+document.getElementById('tabs').addEventListener('click', e=>{
+  const btn = e.target.closest('button[data-tab]');
+  if(btn) switchTab(btn.dataset.tab);
+});
+document.getElementById('refreshBtn').addEventListener('click', loadAll);
+document.getElementById('modalClose').addEventListener('click', closeModal);
+document.getElementById('modalCancel').addEventListener('click', closeModal);
+document.getElementById('modalSave').addEventListener('click', saveModal);
+document.getElementById('modalOverlay').addEventListener('click', e=>{ if(e.target.id==='modalOverlay') closeModal(); });
+document.getElementById('Patient2026_addBtn').addEventListener('click', ()=>openAdd('Patient2026'));
+document.getElementById('SFT2026_addBtn').addEventListener('click', ()=>openAdd('SFT2026'));
+document.getElementById('HHC2026_addBtn').addEventListener('click', ()=>openAdd('HHC2026'));
+
+['Patient2026','SFT2026','HHC2026'].forEach(sheet=>{
+  document.getElementById(sheet+'_search').addEventListener('input', ()=>{ STATE.page[sheet]=1; renderTable(sheet); });
+  const filterKeys = {
+    Patient2026: ['c5','c13','c14','c19'],
+    SFT2026: ['c6','c9','c11'],
+    HHC2026: ['c5','c27'],
+  }[sheet];
+  filterKeys.forEach(k=>{
+    document.getElementById(sheet+'_f_'+k).addEventListener('change', ()=>{ STATE.page[sheet]=1; renderTable(sheet); });
+  });
+});
+
+['dash_f_fy','dash_f_month','dash_f_district','dash_f_rtpa'].forEach(id=>{
+  document.getElementById(id).addEventListener('change', renderDashboard);
+});
+document.getElementById('dash_f_reset').addEventListener('click', ()=>{
+  ['dash_f_fy','dash_f_month','dash_f_district','dash_f_rtpa'].forEach(id=>{ document.getElementById(id).value = ''; });
+  renderDashboard();
+});
+
+['sft_f_fy','sft_f_month','sft_f_district','sft_f_dx','sft_f_med','sft_f_status'].forEach(id=>{
+  document.getElementById(id).addEventListener('change', renderSftDashboard);
+});
+document.getElementById('sft_f_reset').addEventListener('click', ()=>{
+  ['sft_f_fy','sft_f_month','sft_f_district','sft_f_dx','sft_f_med','sft_f_status'].forEach(id=>{ document.getElementById(id).value = ''; });
+  renderSftDashboard();
+});
+
+['patient_f_fy','patient_f_month','patient_f_district','patient_f_dx','patient_f_med','patient_f_status'].forEach(id=>{
+  document.getElementById(id).addEventListener('change', renderPatientDashboard);
+});
+document.getElementById('patient_f_reset').addEventListener('click', ()=>{
+  ['patient_f_fy','patient_f_month','patient_f_district','patient_f_dx','patient_f_med','patient_f_status'].forEach(id=>{ document.getElementById(id).value = ''; });
+  renderPatientDashboard();
+});
+
+['hhc_f_fy','hhc_f_month','hhc_f_district','hhc_f_dx'].forEach(id=>{
+  document.getElementById(id).addEventListener('change', renderHhcDashboard);
+});
+document.getElementById('hhc_f_reset').addEventListener('click', ()=>{
+  ['hhc_f_fy','hhc_f_month','hhc_f_district','hhc_f_dx'].forEach(id=>{ document.getElementById(id).value = ''; });
+  renderHhcDashboard();
+});
+
+document.getElementById('themeToggle').addEventListener('click', ()=>{
+  const root = document.documentElement;
+  const cur = root.getAttribute('data-theme');
+  const next = cur === 'dark' ? 'light' : (cur === 'light' ? '' : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'light' : 'dark'));
+  if(next) root.setAttribute('data-theme', next); else root.removeAttribute('data-theme');
+  renderDashboard();
+  if(document.getElementById('view-SFT2026').classList.contains('active')) renderSftDashboard();
+  if(document.getElementById('view-Patient2026').classList.contains('active')) renderPatientDashboard();
+  if(document.getElementById('view-HHC2026').classList.contains('active')) renderHhcDashboard();
+});
+
+loadAll();
+</script>
+</body>
+</html>
