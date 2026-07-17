@@ -1432,11 +1432,15 @@ function renderSftDashboard(){
   const total = rows.length;
   const ischemicTotal = rows.filter(r=>r.c8==='Ischemic').length;
   const ischemicRtpa = rows.filter(r=>r.c8==='Ischemic' && String(r.c9||'').indexOf('rt-PA')===0).length;
+  const rtpaSw = rows.filter(r=>r.c9==='rt-PA ศว').length;
+  const rtpaSv = rows.filter(r=>r.c9==='rt-PA สว').length;
 
   document.getElementById('sftKpiRow').innerHTML = `
     ${kpiCard('จำนวนผู้ป่วยทั้งหมด', total.toLocaleString(), 'Stroke Fast Track', 'orange', 'fasttrack')}
     ${kpiCard('จำนวน Ischemic ทั้งหมด', ischemicTotal.toLocaleString(), total?((ischemicTotal/total*100).toFixed(1)+'% ของผู้ป่วยทั้งหมด'):'', 'purple', 'medicine')}
     ${kpiCard('Ischemic ที่ได้ rt-PA', ischemicRtpa.toLocaleString(), ischemicTotal?((ischemicRtpa/ischemicTotal*100).toFixed(1)+'% ของ Ischemic'):'', 'green', 'medicine')}
+    ${kpiCard('จำนวน rt-PA ศว', rtpaSw.toLocaleString()+' ราย', total?((rtpaSw/total*100).toFixed(1)+'% ของผู้ป่วยทั้งหมด'):'', 'cyan', 'medicine')}
+    ${kpiCard('จำนวน rt-PA สว', rtpaSv.toLocaleString()+' ราย', total?((rtpaSv/total*100).toFixed(1)+'% ของผู้ป่วยทั้งหมด'):'', 'indigo', 'medicine')}
   `;
 
   destroySftCharts();
@@ -1458,7 +1462,7 @@ function renderSftDashboard(){
   chartCategorical('sftChDx', rows, 'c8', fieldByKey('SFT2026','c8').o, 'bar', SFT_CHART_INSTANCES, 8, false, true);
   chartCategorical('sftChMed', rows, 'c9', fieldByKey('SFT2026','c9').o, 'bar', SFT_CHART_INSTANCES);
   chartCategorical('sftChReason', rows, 'c10', fieldByKey('SFT2026','c10').o, 'bar', SFT_CHART_INSTANCES, 100);
-  chartCategorical('sftChStatus', rows, 'c11', fieldByKey('SFT2026','c11').o, 'doughnut', SFT_CHART_INSTANCES);
+  chartCategorical('sftChStatus', rows, 'c11', fieldByKey('SFT2026','c11').o, 'bar', SFT_CHART_INSTANCES);
   chartCategorical('sftChNurse', rows, 'c12', null, 'bar', SFT_CHART_INSTANCES, 100);
 }
 
