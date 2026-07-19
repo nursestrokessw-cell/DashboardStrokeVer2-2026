@@ -127,7 +127,7 @@
   .page-heading p{max-width:760px;margin:0;color:var(--text-muted);font-size:12.5px;}
 
   .kpi-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-bottom:22px;}
-  #hhcKpiRow{grid-template-columns:repeat(4,minmax(0,1fr));}
+  #hhcKpiRow{grid-template-columns:repeat(auto-fit,minmax(200px,1fr));}
   .kpi{--kpi-color:var(--primary);--kpi-pastel:#edfbf4;position:relative;min-height:172px;padding:21px 22px 19px;overflow:hidden;
     background:linear-gradient(135deg,#fff 12%,var(--kpi-pastel) 125%);border:1px solid color-mix(in srgb,var(--kpi-color) 10%,var(--border));
     border-radius:22px;box-shadow:var(--shadow-sm);transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease;}
@@ -174,14 +174,14 @@
   .chart-card.wide{grid-column:1/-1;}
   .chart-card.wide canvas{max-height:320px;}
   .chart-card.grouped-chart canvas{max-height:520px;}
-  :is(#chartGrid,#patientChartGrid,#sftChartGrid,#hhcChartGrid){grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;}
-  :is(#chartGrid,#patientChartGrid,#sftChartGrid,#hhcChartGrid) .chart-card{padding:14px 15px 12px;border-radius:17px;}
-  :is(#chartGrid,#patientChartGrid,#sftChartGrid,#hhcChartGrid) .chart-card-head{margin-bottom:8px;padding-bottom:8px;}
-  :is(#chartGrid,#patientChartGrid,#sftChartGrid,#hhcChartGrid) .chart-card h3{font-size:12.5px;line-height:1.4;}
-  :is(#chartGrid,#patientChartGrid,#sftChartGrid,#hhcChartGrid) .chart-card .hint{font-size:9.5px;}
-  :is(#chartGrid,#patientChartGrid,#sftChartGrid,#hhcChartGrid) .chart-card canvas{max-height:205px;}
-  :is(#chartGrid,#patientChartGrid,#sftChartGrid,#hhcChartGrid) .chart-card.wide{grid-column:span 2;}
-  :is(#chartGrid,#patientChartGrid,#sftChartGrid,#hhcChartGrid) .chart-card.wide canvas{max-height:235px;}
+  :is(#chartGrid,#patientChartGrid,#sftChartGrid,#rtpaChartGrid,#hhcChartGrid){grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;}
+  :is(#chartGrid,#patientChartGrid,#sftChartGrid,#rtpaChartGrid,#hhcChartGrid) .chart-card{padding:14px 15px 12px;border-radius:17px;}
+  :is(#chartGrid,#patientChartGrid,#sftChartGrid,#rtpaChartGrid,#hhcChartGrid) .chart-card-head{margin-bottom:8px;padding-bottom:8px;}
+  :is(#chartGrid,#patientChartGrid,#sftChartGrid,#rtpaChartGrid,#hhcChartGrid) .chart-card h3{font-size:12.5px;line-height:1.4;}
+  :is(#chartGrid,#patientChartGrid,#sftChartGrid,#rtpaChartGrid,#hhcChartGrid) .chart-card .hint{font-size:9.5px;}
+  :is(#chartGrid,#patientChartGrid,#sftChartGrid,#rtpaChartGrid,#hhcChartGrid) .chart-card canvas{max-height:205px;}
+  :is(#chartGrid,#patientChartGrid,#sftChartGrid,#rtpaChartGrid,#hhcChartGrid) .chart-card.wide{grid-column:span 2;}
+  :is(#chartGrid,#patientChartGrid,#sftChartGrid,#rtpaChartGrid,#hhcChartGrid) .chart-card.wide canvas{max-height:235px;}
   #chartGrid .chart-card.wide{grid-column:auto;}
   #chartGrid .chart-card.wide canvas{max-height:220px;}
   #hhcChartGrid .chart-card.grouped-chart{grid-column:span 2;}
@@ -258,7 +258,7 @@
   @media (max-width:1180px){
     .kpi-row{grid-template-columns:repeat(3,minmax(180px,1fr));}
     #hhcKpiRow{grid-template-columns:repeat(2,minmax(0,1fr));}
-    :is(#chartGrid,#patientChartGrid,#sftChartGrid,#hhcChartGrid){grid-template-columns:repeat(2,minmax(0,1fr));}
+    :is(#chartGrid,#patientChartGrid,#sftChartGrid,#rtpaChartGrid,#hhcChartGrid){grid-template-columns:repeat(2,minmax(0,1fr));}
   }
   @media (max-width:820px){
     .app-header{position:relative;padding:12px 16px;gap:12px;flex-wrap:wrap;}
@@ -269,8 +269,8 @@
     main{padding-top:20px;}
     .page-heading{align-items:flex-start;flex-direction:column;gap:8px;}
     .chart-grid{grid-template-columns:1fr;}
-    :is(#chartGrid,#patientChartGrid,#sftChartGrid,#hhcChartGrid){grid-template-columns:1fr;}
-    :is(#chartGrid,#patientChartGrid,#sftChartGrid,#hhcChartGrid) .chart-card.wide{grid-column:auto;}
+    :is(#chartGrid,#patientChartGrid,#sftChartGrid,#rtpaChartGrid,#hhcChartGrid){grid-template-columns:1fr;}
+    :is(#chartGrid,#patientChartGrid,#sftChartGrid,#rtpaChartGrid,#hhcChartGrid) .chart-card.wide{grid-column:auto;}
     #hhcChartGrid .chart-card.grouped-chart{grid-column:auto;}
     .chart-card.wide{grid-column:auto;}
     .toolbar select{max-width:none;flex:1 1 180px;}
@@ -361,6 +361,10 @@
   <button data-tab="SFT2026">
     <span class="tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 16.5V8h11v8.5M14 11h3l4 4v1.5h-2M7 16.5h8"/><circle cx="5" cy="18" r="2"/><circle cx="17" cy="18" r="2"/><path d="M8 10v4M6 12h4"/></svg></span>
     Stroke Fast Track
+  </button>
+  <button data-tab="rtpa">
+    <span class="tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m14 4 6 6M12.8 5.2l6 6-8.3 8.3a3.5 3.5 0 0 1-5-5l7.3-9.3Z"/><path d="m8.2 10 6 6"/></svg></span>
+    rt-PA
   </button>
   <button data-tab="HHC2026">
     <span class="tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 9-7 9 7M5 10v10h14V10M9 20v-6h6v6"/></svg></span>
@@ -533,6 +537,66 @@
     <div class="pagination" id="SFT2026_pager"></div>
   </section>
 
+  <!-- rt-PA DASHBOARD -->
+  <section class="view" id="view-rtpa">
+    <div class="page-heading">
+      <div>
+        <span class="page-kicker">Thrombolysis monitoring</span>
+        <h2>Dashboard rt-PA</h2>
+        <p>ติดตามผู้ป่วยที่ได้รับยา rt-PA จากข้อมูล rt-PA2026</p>
+      </div>
+    </div>
+    <div class="dashboard-layout">
+      <aside class="filter-panel" id="rtpaDashboardFilters">
+        <h3>ตัวกรองข้อมูล</h3>
+        <div class="field">
+          <label for="rtpa_f_fy">ปีงบประมาณ</label>
+          <select id="rtpa_f_fy"><option value="">ทั้งหมด</option></select>
+        </div>
+        <div class="field">
+          <label for="rtpa_f_month">เดือน</label>
+          <select id="rtpa_f_month"><option value="">ทั้งหมด</option></select>
+        </div>
+        <div class="field">
+          <label for="rtpa_f_district">อำเภอ</label>
+          <select id="rtpa_f_district"><option value="">ทั้งหมด</option></select>
+        </div>
+        <div class="field">
+          <label for="rtpa_f_dx">ผล NI</label>
+          <select id="rtpa_f_dx"><option value="">ทั้งหมด</option></select>
+        </div>
+        <div class="field">
+          <label for="rtpa_f_med">สถานที่ให้ยา</label>
+          <select id="rtpa_f_med"><option value="">ทั้งหมด</option></select>
+        </div>
+        <div class="field">
+          <label for="rtpa_f_status">Complication</label>
+          <select id="rtpa_f_status"><option value="">ทั้งหมด</option></select>
+        </div>
+        <button class="btn ghost" id="rtpa_f_reset">ล้างตัวกรอง</button>
+      </aside>
+      <div class="dashboard-main">
+        <div class="kpi-row" id="rtpaKpiRow"></div>
+        <div class="chart-grid" id="rtpaChartGrid"></div>
+      </div>
+    </div>
+    <div class="toolbar">
+      <label class="search-box">
+        <span class="sr-only">ค้นหารายการ rt-PA</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        <input type="text" id="rtpa_search" placeholder="ค้นหา ชื่อ / HN / AN / อำเภอ ...">
+      </label>
+      <span class="spacer"></span>
+      <span class="count-badge" id="rtpa_count"></span>
+      <button class="btn" id="rtpa_addBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+        เพิ่มรายการ
+      </button>
+    </div>
+    <div class="table-wrap"><table><thead><tr id="rtpa_thead"></tr></thead><tbody id="rtpa_tbody"></tbody></table></div>
+    <div class="pagination" id="rtpa_pager"></div>
+  </section>
+
   <!-- HHC2026 -->
   <section class="view" id="view-HHC2026">
     <div class="page-heading">
@@ -626,6 +690,7 @@
     <div class="table-wrap"><table><thead><tr id="HHC2026_thead"></tr></thead><tbody id="HHC2026_tbody"></tbody></table></div>
     <div class="pagination" id="HHC2026_pager"></div>
   </section>
+
 </main>
 
 <div class="modal-overlay" id="modalOverlay">
@@ -755,6 +820,46 @@ HHC2026: [
   {k:'c26',l:'MRS 6 เดือน',t:'number',g:'ติดตาม MRS'},
   {k:'c27',l:'ผลการเยี่ยมบ้าน',t:'select',g:'ผลลัพธ์',o:['ดีขึ้น','เท่าเดิม','แย่ลง','referกลับ','refer รพ.ศูนย์','dead']},
   {k:'c28',l:'เบอร์โทร',t:'text',g:'ผลลัพธ์'},
+],
+Rtpa2026: [
+  {k:'c1',l:'ลำดับ',t:'number',g:'ข้อมูลทั่วไป',ro:true},
+  {k:'c2',l:'วัน-เดือน-ปี',t:'date',g:'ข้อมูลทั่วไป'},
+  {k:'c3',l:'เวลาที่มา ER',t:'text',g:'ข้อมูลทั่วไป'},
+  {k:'c4',l:'HN',t:'text',g:'ข้อมูลทั่วไป'},
+  {k:'c5',l:'AN',t:'text',g:'ข้อมูลทั่วไป'},
+  {k:'c6',l:'รูปแบบการมา',t:'text',g:'ข้อมูลทั่วไป'},
+  {k:'c7',l:'เพศ',t:'select',g:'ข้อมูลทั่วไป',o:['ชาย','หญิง']},
+  {k:'c8',l:'ชื่อ-สกุล ผู้ป่วย',t:'text',g:'ข้อมูลทั่วไป'},
+  {k:'c9',l:'อายุ',t:'number',g:'ข้อมูลทั่วไป'},
+  {k:'c10',l:'ที่อยู่',t:'textarea',g:'ข้อมูลทั่วไป'},
+  {k:'c11',l:'อำเภอ',t:'text',g:'ข้อมูลทั่วไป'},
+  {k:'c12',l:'เบอร์โทร',t:'text',g:'ข้อมูลทั่วไป'},
+  {k:'c13',l:'สถานที่ให้ยา',t:'text',g:'การให้ยา'},
+  {k:'c14',l:'Dose ยา',t:'text',g:'การให้ยา'},
+  {k:'c15',l:'ให้ยาภายใน',t:'text',g:'การให้ยา'},
+  {k:'c16',l:'Onset to Door',t:'number',g:'ระยะเวลา'},
+  {k:'c17',l:'ให้ยารวมนับตั้งแต่เวลาที่เป็น',t:'number',g:'ระยะเวลา'},
+  {k:'c18',l:'D to CT',t:'number',g:'ระยะเวลา'},
+  {k:'c19',l:'CT ใน 25 นาที',t:'text',g:'ตัวชี้วัดคุณภาพ'},
+  {k:'c20',l:'Door to Lab',t:'number',g:'ระยะเวลา'},
+  {k:'c21',l:'D to Lab ภายใน 45 นาที',t:'text',g:'ตัวชี้วัดคุณภาพ'},
+  {k:'c22',l:'Door to Needle',t:'number',g:'ระยะเวลา'},
+  {k:'c23',l:'เวลาให้ยา',t:'text',g:'การให้ยา'},
+  {k:'c24',l:'NI ก่อนให้ยา',t:'number',g:'การประเมิน (NIHSS / BI / MRS)'},
+  {k:'c25',l:'NI ก่อน D/C',t:'number',g:'การประเมิน (NIHSS / BI / MRS)'},
+  {k:'c26',l:'ผล NI',t:'text',g:'การประเมิน (NIHSS / BI / MRS)'},
+  {k:'c27',l:'BI ก่อนให้ยา',t:'number',g:'การประเมิน (NIHSS / BI / MRS)'},
+  {k:'c28',l:'BI ก่อน D/C',t:'number',g:'การประเมิน (NIHSS / BI / MRS)'},
+  {k:'c29',l:'ผล BI',t:'text',g:'การประเมิน (NIHSS / BI / MRS)'},
+  {k:'c30',l:'MRS รับใหม่',t:'number',g:'การประเมิน (NIHSS / BI / MRS)'},
+  {k:'c31',l:'MRS D/C',t:'number',g:'การประเมิน (NIHSS / BI / MRS)'},
+  {k:'c32',l:'ผล MRS',t:'text',g:'การประเมิน (NIHSS / BI / MRS)'},
+  {k:'c33',l:'Complication',t:'text',g:'อื่นๆ'},
+  {k:'c34',l:'LOS',t:'number',g:'อื่นๆ'},
+  {k:'c35',l:'ค่าใช้จ่าย',t:'number',g:'อื่นๆ'},
+  {k:'c36',l:'สิทธิ์',t:'text',g:'อื่นๆ'},
+  {k:'c37',l:'vessel',t:'text',g:'อื่นๆ'},
+  {k:'c38',l:'หมายเหตุ',t:'textarea',g:'อื่นๆ'},
 ]
 };
 
@@ -762,12 +867,16 @@ const SUMMARY = {
   Patient2026: ['c1','c2','c8','c11','c13','c14','c19','c21'],
   SFT2026: ['c1','c2','c4','c3','c8','c9','c11'],
   HHC2026: ['c1','c2','c3','c4','c7','c11','c27'],
+  Rtpa2026: ['c1','c2','c4','c5','c8','c11','c13','c22'],
 };
 
-const SHEET_TITLES = {Patient2026:'ผู้ป่วย Stroke', SFT2026:'Stroke Fast Track', HHC2026:'เยี่ยมบ้าน (HHC)'};
+const SHEET_TITLES = {Patient2026:'ผู้ป่วย Stroke', SFT2026:'Stroke Fast Track', HHC2026:'เยี่ยมบ้าน (HHC)', Rtpa2026:'rt-PA'};
 
-let STATE = { data:{Patient2026:{headers:[],rows:[]},SFT2026:{headers:[],rows:[]},HHC2026:{headers:[],rows:[]}},
-  page:{Patient2026:1,SFT2026:1,HHC2026:1}, pageSize:20, editing:null };
+// Front-end sheet key -> actual Google Sheet tab name expected by the backend (Code.gs)
+const SHEET_API_NAME = {Patient2026:'Patient2026', SFT2026:'SFT2026', HHC2026:'HHC2026', Rtpa2026:'rt-PA2026'};
+
+let STATE = { data:{Patient2026:{headers:[],rows:[]},SFT2026:{headers:[],rows:[]},HHC2026:{headers:[],rows:[]},Rtpa2026:{headers:[],rows:[]}},
+  page:{Patient2026:1,SFT2026:1,HHC2026:1,Rtpa2026:1,rtpaTable:1}, pageSize:20, editing:null };
 
 /* ===================== API ===================== */
 async function apiGet(){
@@ -776,6 +885,7 @@ async function apiGet(){
   return res.json();
 }
 async function apiPost(payload){
+  payload = Object.assign({}, payload, { sheet: SHEET_API_NAME[payload.sheet] || payload.sheet });
   const res = await fetch(GAS_URL, { method:'POST', body: JSON.stringify(payload) });
   if(!res.ok) throw new Error('HTTP ' + res.status);
   return res.json();
@@ -801,15 +911,19 @@ async function loadAll(){
   try{
     const json = await apiGet();
     if(json.status !== 'ok') throw new Error(json.message || 'load error');
-    STATE.data = json.sheets;
+    const data = {};
+    Object.entries(SHEET_API_NAME).forEach(([key,name])=>{ data[key] = json.sheets[name] || {headers:[],rows:[]}; });
+    STATE.data = data;
     setStatus('ok','เชื่อมต่อ Google Sheet สำเร็จ');
     populateFilters();
     populateDashboardFilters();
     populateSftDashFilters();
+    populateRtpaDashFilters();
     populatePatientDashFilters();
     populateHhcDashFilters();
     renderDashboard();
     if(document.getElementById('view-SFT2026').classList.contains('active')) renderSftDashboard();
+    if(document.getElementById('view-rtpa').classList.contains('active')) renderRtpaDashboard();
     if(document.getElementById('view-Patient2026').classList.contains('active')) renderPatientDashboard();
     if(document.getElementById('view-HHC2026').classList.contains('active')) renderHhcDashboard();
     ['Patient2026','SFT2026','HHC2026'].forEach(renderTable);
@@ -851,6 +965,7 @@ function populateFilters(){
     Patient2026: ['c5','c13','c14','c19'],
     SFT2026: ['c6','c9','c11'],
     HHC2026: ['c5','c27'],
+    Rtpa2026: [],
   };
   Object.entries(map).forEach(([sheet,keys])=>{
     keys.forEach(key=>{
@@ -894,6 +1009,13 @@ function monthOf(iso){
   if(p.length < 2) return null;
   const m = Number(p[1]);
   return m || null;
+}
+function isRtpaValue(value){
+  return /^rt-PA(?:\s|$)/i.test(String(value||'').trim());
+}
+function isIschemicDiagnosis(value){
+  const diagnosis = String(value||'').trim().toLowerCase();
+  return diagnosis === 'ischemic' || diagnosis === 'ischemic stroke';
 }
 
 function populateDashboardFilters(){
@@ -1010,6 +1132,61 @@ function applySftDashFilters(rows, f){
     if(f.dx && r.c8 !== f.dx) return false;
     if(f.med && r.c9 !== f.med) return false;
     if(f.status && r.c11 !== f.status) return false;
+    return true;
+  });
+}
+
+/* ===================== rt-PA DASHBOARD FILTERS ===================== */
+function populateRtpaDashFilters(){
+  const fySel = document.getElementById('rtpa_f_fy');
+  if(!fySel) return;
+
+  const rtpaRows = STATE.data.Rtpa2026?.rows || [];
+  const fySet = new Set();
+  rtpaRows.forEach(r=>{ const fy = fiscalYearOf(r.c2); if(fy) fySet.add(fy); });
+  const fyCurrent = fySel.value;
+  fySel.innerHTML = '<option value="">ทั้งหมด</option>' +
+    [...fySet].sort((a,b)=>b-a).map(fy=>`<option value="${fy}">${fy}</option>`).join('');
+  fySel.value = fyCurrent;
+
+  const monthSel = document.getElementById('rtpa_f_month');
+  if(!monthSel.dataset.built){
+    monthSel.innerHTML = '<option value="">ทั้งหมด</option>' +
+      MOPH_MONTHS.map(m=>`<option value="${m.v}">${m.l}</option>`).join('');
+    monthSel.dataset.built = '1';
+  }
+
+  const selectMap = { rtpa_f_district:'c11', rtpa_f_dx:'c26', rtpa_f_med:'c13', rtpa_f_status:'c33' };
+  Object.entries(selectMap).forEach(([id,key])=>{
+    const sel = document.getElementById(id);
+    if(!sel) return;
+    const current = sel.value;
+    const values = [...new Set(rtpaRows.map(r=>r[key]).filter(v=>v!=='' && v!=null))].sort();
+    sel.innerHTML = '<option value="">ทั้งหมด</option>' +
+      values.map(v=>`<option value="${escapeHtml(v)}">${escapeHtml(v)}</option>`).join('');
+    sel.value = current;
+  });
+}
+
+function getRtpaDashFilters(){
+  return {
+    fy: document.getElementById('rtpa_f_fy')?.value || '',
+    month: document.getElementById('rtpa_f_month')?.value || '',
+    district: document.getElementById('rtpa_f_district')?.value || '',
+    dx: document.getElementById('rtpa_f_dx')?.value || '',
+    med: document.getElementById('rtpa_f_med')?.value || '',
+    status: document.getElementById('rtpa_f_status')?.value || '',
+  };
+}
+
+function applyRtpaDashFilters(rows, f){
+  return rows.filter(r=>{
+    if(f.fy && String(fiscalYearOf(r.c2)) !== f.fy) return false;
+    if(f.month && String(monthOf(r.c2)) !== f.month) return false;
+    if(f.district && r.c11 !== f.district) return false;
+    if(f.dx && r.c26 !== f.dx) return false;
+    if(f.med && r.c13 !== f.med) return false;
+    if(f.status && r.c33 !== f.status) return false;
     return true;
   });
 }
@@ -1313,11 +1490,12 @@ let CHART_INSTANCES = [];
 function destroyCharts(){ CHART_INSTANCES.forEach(c=>c.destroy()); CHART_INSTANCES = []; }
 let SFT_CHART_INSTANCES = [];
 function destroySftCharts(){ SFT_CHART_INSTANCES.forEach(c=>c.destroy()); SFT_CHART_INSTANCES = []; }
+let RTPA_CHART_INSTANCES = [];
+function destroyRtpaCharts(){ RTPA_CHART_INSTANCES.forEach(c=>c.destroy()); RTPA_CHART_INSTANCES = []; }
 let PATIENT_CHART_INSTANCES = [];
 function destroyPatientCharts(){ PATIENT_CHART_INSTANCES.forEach(c=>c.destroy()); PATIENT_CHART_INSTANCES = []; }
 let HHC_CHART_INSTANCES = [];
 function destroyHhcCharts(){ HHC_CHART_INSTANCES.forEach(c=>c.destroy()); HHC_CHART_INSTANCES = []; }
-
 const valueLabelsPlugin = {
   id:'valueLabels',
   afterDatasetsDraw(chart, args, options){
@@ -1466,6 +1644,86 @@ function renderSftDashboard(){
   chartCategorical('sftChNurse', rows, 'c12', null, 'bar', SFT_CHART_INSTANCES, 100);
 }
 
+/* ===================== rt-PA DASHBOARD ===================== */
+function renderRtpaDashboard(){
+  const f = getRtpaDashFilters();
+  const rows = applyRtpaDashFilters(STATE.data.Rtpa2026.rows, f);
+
+  const total = rows.length;
+  const ischemic = total;
+  const rtpaSu = rows.filter(r=>String(r.c13||'').trim()==='SU').length;
+  const rtpaSv = rows.filter(r=>String(r.c13||'').trim()==='สวรรคโลก').length;
+  const referMt = rows.filter(r=>String(r.c38||'').toLowerCase().includes('refer for mt')).length;
+
+  document.getElementById('rtpaKpiRow').innerHTML = `
+    ${kpiCard('ได้รับยา rt-PA ทั้งหมด', total.toLocaleString()+' ราย', 'นับจาก rt-PA2026', 'green', 'medicine')}
+    ${kpiCard('Ischemic Stroke', ischemic.toLocaleString()+' ราย', total?((ischemic/total*100).toFixed(1)+'% ของผู้ได้รับ rt-PA'):'', 'purple', 'patient')}
+    ${kpiCard('rt-PA SU', rtpaSu.toLocaleString()+' ราย', total?((rtpaSu/total*100).toFixed(1)+'% ของผู้ได้รับ rt-PA'):'', 'cyan', 'medicine')}
+    ${kpiCard('rt-PA สว', rtpaSv.toLocaleString()+' ราย', total?((rtpaSv/total*100).toFixed(1)+'% ของผู้ได้รับ rt-PA'):'', 'indigo', 'medicine')}
+    ${kpiCard('Refer for MT', referMt.toLocaleString()+' ราย', total?((referMt/total*100).toFixed(1)+'% ของผู้ได้รับ rt-PA'):'', 'red', 'refer')}
+  `;
+
+  destroyRtpaCharts();
+  const grid = document.getElementById('rtpaChartGrid');
+  grid.innerHTML = `
+    <div class="chart-card"><div class="chart-card-head"><div><h3>แนวโน้มการให้ยา rt-PA รายเดือน</h3><div class="hint">rt-PA2026 · วัน-เดือน-ปี</div></div></div><canvas id="rtpaChTrend"></canvas></div>
+    <div class="chart-card"><div class="chart-card-head"><div><h3>สถานที่ให้ยา</h3><div class="hint">rt-PA2026 · สถานที่ให้ยา</div></div></div><canvas id="rtpaChMed"></canvas></div>
+    <div class="chart-card"><div class="chart-card-head"><div><h3>ผล NI</h3><div class="hint">rt-PA2026 · ผล NI</div></div></div><canvas id="rtpaChDx"></canvas></div>
+    <div class="chart-card"><div class="chart-card-head"><div><h3>จำนวนผู้ป่วยรายอำเภอ</h3><div class="hint">rt-PA2026 · อำเภอ</div></div></div><canvas id="rtpaChDistrict"></canvas></div>
+    <div class="chart-card"><div class="chart-card-head"><div><h3>มาโดย</h3><div class="hint">rt-PA2026 · รูปแบบการมา</div></div></div><canvas id="rtpaChMode"></canvas></div>
+    <div class="chart-card"><div class="chart-card-head"><div><h3>Complication</h3><div class="hint">rt-PA2026 · Complication</div></div></div><canvas id="rtpaChStatus"></canvas></div>
+  `;
+
+  chartTrend('rtpaChTrend', rows, 'c2', RTPA_CHART_INSTANCES);
+  chartCategorical('rtpaChMed', rows, 'c13', ['SU','สวรรคโลก'], 'doughnut', RTPA_CHART_INSTANCES, null, true);
+  chartCategorical('rtpaChDx', rows, 'c26', null, 'bar', RTPA_CHART_INSTANCES, 8, false, true);
+  chartCategorical('rtpaChDistrict', rows, 'c11', null, 'bar', RTPA_CHART_INSTANCES, 8, true);
+  chartCategorical('rtpaChMode', rows, 'c6', null, 'bar', RTPA_CHART_INSTANCES);
+  chartCategorical('rtpaChStatus', rows, 'c33', null, 'bar', RTPA_CHART_INSTANCES);
+
+  renderRtpaTable();
+}
+
+/* ===================== rt-PA TABLE — CRUD over filtered rt-PA2026 rows ===================== */
+function renderRtpaTable(){
+  const f = getRtpaDashFilters();
+  let rows = applyRtpaDashFilters(STATE.data.Rtpa2026.rows, f);
+  const q = (document.getElementById('rtpa_search')?.value || '').trim();
+  rows = rows.filter(r=>rowMatchesSearch('Rtpa2026', r, q));
+
+  const cols = SUMMARY.Rtpa2026;
+  const thead = document.getElementById('rtpa_thead');
+  thead.innerHTML = cols.map(k=>`<th>${fieldByKey('Rtpa2026',k).l}</th>`).join('') + '<th>จัดการ</th>';
+
+  const pageSize = STATE.pageSize;
+  const totalPages = Math.max(1, Math.ceil(rows.length / pageSize));
+  if(STATE.page.rtpaTable > totalPages) STATE.page.rtpaTable = totalPages;
+  const page = STATE.page.rtpaTable;
+  const start = (page-1)*pageSize;
+  const pageRows = rows.slice(start, start+pageSize);
+
+  const tbody = document.getElementById('rtpa_tbody');
+  if(pageRows.length === 0){
+    tbody.innerHTML = `<tr><td colspan="${cols.length+1}" class="empty">ไม่พบข้อมูล</td></tr>`;
+  } else {
+    tbody.innerHTML = pageRows.map(r=>{
+      const tds = cols.map(k=>`<td>${escapeHtml(displayVal('Rtpa2026',k,r[k]))}</td>`).join('');
+      return `<tr>${tds}<td><div class="row-actions">
+        <button class="icon-btn" onclick="openEdit('Rtpa2026',${r._row})">แก้ไข</button>
+        <button class="icon-btn" onclick="confirmDelete('Rtpa2026',${r._row})">ลบ</button>
+      </div></td></tr>`;
+    }).join('');
+  }
+  document.getElementById('rtpa_count').textContent = `พบ ${rows.length.toLocaleString()} รายการ`;
+
+  const pager = document.getElementById('rtpa_pager');
+  pager.innerHTML = `
+    <button class="btn ghost" ${page<=1?'disabled':''} onclick="gotoRtpaPage(${page-1})">‹ ก่อนหน้า</button>
+    <span class="muted">หน้า ${page} / ${totalPages}</span>
+    <button class="btn ghost" ${page>=totalPages?'disabled':''} onclick="gotoRtpaPage(${page+1})">ถัดไป ›</button>`;
+}
+function gotoRtpaPage(p){ STATE.page.rtpaTable = p; renderRtpaTable(); }
+
 /* ===================== Patient2026 DASHBOARD ===================== */
 function renderPatientDashboard(){
   const f = getPatientDashFilters();
@@ -1512,7 +1770,12 @@ function renderPatientDashboard(){
 
 /* ===================== HHC2026 DASHBOARD ===================== */
 const HHC_OUTCOME_LABELS = ['ดีขึ้น','เท่าเดิม','แย่ลง','เสียชีวิต','ไม่พบ'];
-const HHC_DX_ORDER = ['Ischemic','Hemorrhage','TIA'];
+const HHC_DX_ORDER = ['Ischemic Stroke','Hemorrhage','TIA'];
+
+function hhcDiagnosisBucket(row){
+  const diagnosis = String(row.c4 ?? '').trim();
+  return isIschemicDiagnosis(diagnosis) ? 'Ischemic Stroke' : diagnosis;
+}
 
 function hhcDischargeBucket(row){
   const raw = String(row.c27 ?? '').trim();
@@ -1532,12 +1795,14 @@ function renderHhcDashboard(){
   const rows = applyHhcDashFilters(STATE.data.HHC2026.rows, f);
 
   const total = rows.length;
+  const ischemic = rows.filter(r=>isIschemicDiagnosis(r.c4)).length;
   const worse = rows.filter(r=>String(r.c27||'').trim()==='แย่ลง').length;
   const referBack = rows.filter(r=>String(r.c27||'').trim()==='referกลับ').length;
   const dead = rows.filter(isHhcDead).length;
 
   document.getElementById('hhcKpiRow').innerHTML = `
     ${kpiCard('ผู้ป่วยเยี่ยมบ้านทั้งหมด', total.toLocaleString(), 'เยี่ยมบ้าน (HHC)', 'indigo', 'home')}
+    ${kpiCard('Ischemic Stroke', ischemic.toLocaleString()+' ราย', 'นับจากคอลัมน์ Diagnosis · c4', 'purple', 'medicine')}
     ${kpiCard('อาการแย่ลง', worse.toLocaleString()+' ราย', total?((worse/total*100).toFixed(1)+'% ของทั้งหมด'):'', 'orange', 'worse')}
     ${kpiCard('Refer กลับ', referBack.toLocaleString()+' ราย', total?((referBack/total*100).toFixed(1)+'% ของทั้งหมด'):'', 'cyan', 'refer')}
     ${kpiCard('เสียชีวิต', dead.toLocaleString()+' ราย', total?((dead/total*100).toFixed(1)+'% ของทั้งหมด'):'', 'red', 'heart')}
@@ -1555,7 +1820,8 @@ function renderHhcDashboard(){
   `;
 
   chartTrend('hhcChTrend', rows, 'c7', HHC_CHART_INSTANCES);
-  chartCategorical('hhcChDx', rows, 'c4', HHC_DX_ORDER, 'doughnut', HHC_CHART_INSTANCES, null, true);
+  const diagnosisRows = rows.map(r=>Object.assign({}, r, {_hhcDiagnosis:hhcDiagnosisBucket(r)}));
+  chartCategorical('hhcChDx', diagnosisRows, '_hhcDiagnosis', HHC_DX_ORDER, 'doughnut', HHC_CHART_INSTANCES, null, true);
   chartCategorical('hhcChDistrict', rows, 'c5', fieldByKey('HHC2026','c5').o, 'bar', HHC_CHART_INSTANCES, 8, true);
   chartHhcOutcomeGrouped('hhcChDischarge', rows, hhcDischargeBucket, HHC_CHART_INSTANCES);
   chartHhcOutcomeGrouped('hhcChBiStack', rows, r=>hhcTrendBucket(r,'c11'), HHC_CHART_INSTANCES);
@@ -1720,7 +1986,7 @@ function chartPeriodAverages(canvasId, rows, periods, datasetLabel, store, sugge
 
 function chartHhcOutcomeGrouped(canvasId, rows, bucketFn, store){
   store = store || HHC_CHART_INSTANCES;
-  const dxRows = HHC_DX_ORDER.map(dx => rows.filter(r=>r.c4===dx));
+  const dxRows = HHC_DX_ORDER.map(dx => rows.filter(r=>hhcDiagnosisBucket(r)===dx));
   const datasets = HHC_OUTCOME_LABELS.map((label,i)=>({
     label,
     data: dxRows.map(list => list.filter(r=>bucketFn(r)===label).length),
@@ -1774,10 +2040,11 @@ function chartTrend(canvasId, rows, dateKey, store){
   }));
 }
 
-function chartBeforeAfter(canvasId, before, after){
+function chartBeforeAfter(canvasId, before, after, store){
+  store = store || CHART_INSTANCES;
   const textColor = cssVar('--text-secondary');
   const gridColor = cssVar('--grid');
-  CHART_INSTANCES.push(new Chart(document.getElementById(canvasId), {
+  store.push(new Chart(document.getElementById(canvasId), {
     type:'bar',
     data:{ labels:['ก่อน','หลัง'], datasets:[{ data:[Number(before.toFixed(1)), Number(after.toFixed(1))],
       backgroundColor:[cssVar('--s1'), cssVar('--s2')], borderRadius:10, maxBarThickness:60 }]},
@@ -1793,6 +2060,7 @@ function switchTab(tab){
   document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active', v.id==='view-'+tab));
   if(tab==='dashboard') renderDashboard();
   if(tab==='SFT2026') renderSftDashboard();
+  if(tab==='rtpa') renderRtpaDashboard();
   if(tab==='Patient2026') renderPatientDashboard();
   if(tab==='HHC2026') renderHhcDashboard();
 }
@@ -1809,6 +2077,8 @@ document.getElementById('modalOverlay').addEventListener('click', e=>{ if(e.targ
 document.getElementById('Patient2026_addBtn').addEventListener('click', ()=>openAdd('Patient2026'));
 document.getElementById('SFT2026_addBtn').addEventListener('click', ()=>openAdd('SFT2026'));
 document.getElementById('HHC2026_addBtn').addEventListener('click', ()=>openAdd('HHC2026'));
+document.getElementById('rtpa_addBtn').addEventListener('click', ()=>openAdd('Rtpa2026'));
+document.getElementById('rtpa_search').addEventListener('input', ()=>{ STATE.page.rtpaTable=1; renderRtpaTable(); });
 
 ['Patient2026','SFT2026','HHC2026'].forEach(sheet=>{
   document.getElementById(sheet+'_search').addEventListener('input', ()=>{ STATE.page[sheet]=1; renderTable(sheet); });
@@ -1838,6 +2108,14 @@ document.getElementById('sft_f_reset').addEventListener('click', ()=>{
   renderSftDashboard();
 });
 
+['rtpa_f_fy','rtpa_f_month','rtpa_f_district','rtpa_f_dx','rtpa_f_med','rtpa_f_status'].forEach(id=>{
+  document.getElementById(id).addEventListener('change', renderRtpaDashboard);
+});
+document.getElementById('rtpa_f_reset').addEventListener('click', ()=>{
+  ['rtpa_f_fy','rtpa_f_month','rtpa_f_district','rtpa_f_dx','rtpa_f_med','rtpa_f_status'].forEach(id=>{ document.getElementById(id).value = ''; });
+  renderRtpaDashboard();
+});
+
 ['patient_f_fy','patient_f_month','patient_f_district','patient_f_dx','patient_f_med','patient_f_status'].forEach(id=>{
   document.getElementById(id).addEventListener('change', renderPatientDashboard);
 });
@@ -1862,6 +2140,7 @@ document.getElementById('themeToggle').addEventListener('click', ()=>{
   if(next) root.setAttribute('data-theme', next); else root.removeAttribute('data-theme');
   renderDashboard();
   if(document.getElementById('view-SFT2026').classList.contains('active')) renderSftDashboard();
+  if(document.getElementById('view-rtpa').classList.contains('active')) renderRtpaDashboard();
   if(document.getElementById('view-Patient2026').classList.contains('active')) renderPatientDashboard();
   if(document.getElementById('view-HHC2026').classList.contains('active')) renderHhcDashboard();
 });
